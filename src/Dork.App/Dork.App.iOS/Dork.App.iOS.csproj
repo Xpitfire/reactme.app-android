@@ -138,8 +138,12 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\dork.web\src\Dork.Core.Domain\Dork.Core.Domain.csproj">
+      <Project>{526d15b6-2268-4a34-8a88-34fd0d4b3baa}</Project>
+      <Name>Dork.Core.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dork.App\Dork.App.csproj">
-      <Project>{3fef4ced-fac2-43c0-bc5f-9060c5ffc1c1}</Project>
+      <Project>{6e21a545-a3dd-43fd-9842-200ffe92b294}</Project>
       <Name>Dork.App</Name>
     </ProjectReference>
   </ItemGroup>
