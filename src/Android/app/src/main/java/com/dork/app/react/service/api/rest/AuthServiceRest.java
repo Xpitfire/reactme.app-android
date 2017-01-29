@@ -10,9 +10,9 @@ import retrofit2.http.Path;
  * Created by mcd on 23.01.2017.
  */
 
-public interface ProfileServiceRest {
+public interface AuthServiceRest {
 
-    @GET("/api/values/{id}")
+    @GET("/api/auth/{id}")
     Call<User> getUser(@Path("id") String id);
 
 }

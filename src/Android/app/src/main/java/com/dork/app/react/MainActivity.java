@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dork.app.react.service.api.rest.ProfileServiceRest;
+import com.dork.app.react.service.api.rest.AuthServiceRest;
 import com.dork.app.react.model.domain.User;
 
 import retrofit2.Call;
@@ -132,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
 
-                ProfileServiceRest userService = retrofit.create(ProfileServiceRest.class);
+                AuthServiceRest userService = retrofit.create(AuthServiceRest.class);
                 Call<User> result = userService.getUser("174806452852253");
                 try {
                     result.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Log.i("DORK", "User response: " + response.body().getUsername());
+                            Log.i("DORK", "User response: " + response.body());
                         }
 
                         @Override

@@ -7,7 +7,7 @@ package com.dork.app.react.model.domain;
 public class User extends EntityBase {
 
     public enum UserStatus {
-        ACTIVE,
+        Active,
         DEACTIVATED,
         DELETED,
         BLOCKED
@@ -73,5 +73,18 @@ public class User extends EntityBase {
     @Override
     public int hashCode() {
         return username.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", passwordHash='").append(passwordHash).append('\'');
+        sb.append(", profile=").append(profile);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
     }
 }
