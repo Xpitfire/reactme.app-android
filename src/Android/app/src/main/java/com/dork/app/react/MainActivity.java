@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dork.app.react.model.api.UserService;
+import com.dork.app.react.service.api.rest.ProfileServiceRest;
 import com.dork.app.react.model.domain.User;
 
 import retrofit2.Call;
@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter sectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        viewPager = (ViewPager) findViewById(R.id.container);
+        viewPager.setAdapter(sectionsPagerAdapter);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -127,17 +127,18 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(event -> {
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.1.140:5000")
+                        .baseUrl("http://dork-943e.azurewebsites.net")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                UserService userService = retrofit.create(UserService.class);
-                Call<User> result = userService.getUser("5883e4cb5e83b84de0249ff5");
+
+                ProfileServiceRest userService = retrofit.create(ProfileServiceRest.class);
+                Call<User> result = userService.getUser("174806452852253");
                 try {
                     result.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Log.i("DORK", "User response: " + response.body().toString());
+                            Log.i("DORK", "User response: " + response.body().getUsername());
                         }
 
                         @Override
