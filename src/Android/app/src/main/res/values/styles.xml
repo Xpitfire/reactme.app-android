@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -13,8 +14,8 @@
         <item name="android:windowBackground">@color/primary</item>
 
         <item name="colorControlNormal">@color/iron</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
         <item name="android:textColorHint">@color/iron</item>
 
         <item name="colorButtonNormal">@color/primary_darker</item>
@@ -23,7 +24,22 @@
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/primary_darker</item>
         <item name="android:textColorPrimary">@color/accent</item>
-        <item name="android:background">@color/primary</item>
+        <item name="android:background">@color/whitish</item>
+        <item name="android:textColorHint">@color/aluminum</item>
+    </style>
+
+    <style name="FacebookLoginButton">
+        <item name="android:background">@drawable/facebook</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="GooglePlusLoginButton">
+        <item name="android:background">@drawable/googleplus</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
 </resources>

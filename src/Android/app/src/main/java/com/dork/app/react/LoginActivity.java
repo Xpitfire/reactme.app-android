@@ -22,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
+    @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
+    @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         _loginButton.setOnClickListener(v -> login());
+        _loginFacebookButton.setOnClickListener(v -> onHandleLogin());
+        _loginGooglePlusButton.setOnClickListener(v -> onHandleLogin());
 
         _signupLink.setOnClickListener(v -> {
             // Start the Signup activity
@@ -48,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
+        onHandleLogin();
+    }
+
+    private void onHandleLogin() {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -58,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-
         new android.os.Handler().postDelayed(
                 () -> {
                     // On complete call either onLoginSuccess or onLoginFailed
@@ -67,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }, 3000);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

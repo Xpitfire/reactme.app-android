@@ -8,19 +8,21 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="26dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
         <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="223dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginRight="-50dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/logo" />
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppTheme.Dark.Dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -34,6 +36,7 @@
 
         <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppTheme.Dark.Dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -49,18 +52,37 @@
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="24dp"
-            android:padding="12dp"
+            android:padding="16dp"
             android:text="@string/login"/>
 
         <TextView android:id="@+id/link_signup"
+            android:textColor="@color/aluminum"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:linksClickable="false"
+            android:autoLink="all"
             android:text="@string/signup_info_text"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16sp"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/loginFacebookButton"
+            android:scaleType="centerInside"
+            android:layout_width="wrap_content"
+            style="@style/FacebookLoginButton"
+            android:text="@string/facebook_login"
+            android:layout_height="50dp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/loginGooglePlusButton"
+            android:scaleType="centerInside"
+            android:layout_width="wrap_content"
+            style="@style/GooglePlusLoginButton"
+            android:text="@string/google_plus_login"
+            android:layout_height="50dp" />
 
     </LinearLayout>
 </ScrollView>
