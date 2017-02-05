@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:id="@+id/login_view">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,7 +17,7 @@
             android:layout_width="223dp"
             android:layout_height="140dp"
             android:layout_marginBottom="14dp"
-            android:layout_marginRight="-50dp"
+            android:layout_marginEnd="-50dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/logo" />
 
