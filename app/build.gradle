@@ -11,9 +11,6 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 1
         versionName "0.0.1"
-        jackOptions {
-            enabled true
-        }
     }
     buildTypes {
         release {
@@ -32,8 +29,8 @@ android {
         exclude 'META-INF/DEPENDENCIES'
     }
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_7
     }
 }
 

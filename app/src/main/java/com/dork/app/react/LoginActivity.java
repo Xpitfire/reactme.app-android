@@ -3,9 +3,11 @@ package com.dork.app.react;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.util.Log;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,14 +33,31 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _loginButton.setOnClickListener(v -> login());
-        _loginFacebookButton.setOnClickListener(v -> onHandleLogin());
-        _loginGooglePlusButton.setOnClickListener(v -> onHandleLogin());
-
-        _signupLink.setOnClickListener(v -> {
-            // Start the Signup activity
-            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-            startActivityForResult(intent, REQUEST_SIGNUP);
+        _loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+        _loginFacebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHandleLogin();
+            }
+        });
+        _loginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHandleLogin();
+            }
+        });
+        _signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+            }
         });
     }
 
@@ -65,13 +84,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-        new android.os.Handler().postDelayed(
-                () -> {
-                    // On complete call either onLoginSuccess or onLoginFailed
-                    onLoginSuccess();
-                    // onLoginFailed();
-                    progressDialog.dismiss();
-                }, 3000);
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // On complete call either onLoginSuccess or onLoginFailed
+                onLoginSuccess();
+                // onLoginFailed();
+                progressDialog.dismiss();
+            }
+        }, 3000);
     }
 
     @Override

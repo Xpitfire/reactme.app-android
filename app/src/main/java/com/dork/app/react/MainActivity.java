@@ -64,8 +64,13 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         // Set up the ViewPager with the sections adapter.
         _viewPager.setAdapter(mSectionsPagerAdapter);
         _tabLayout.setupWithViewPager(_viewPager);
-        _fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        _fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
