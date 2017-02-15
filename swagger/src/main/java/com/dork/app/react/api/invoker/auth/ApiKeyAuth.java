@@ -18,7 +18,7 @@ import com.dork.app.react.api.invoker.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T00:05:04.773+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T00:09:39.325+01:00")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

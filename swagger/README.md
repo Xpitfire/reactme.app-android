@@ -58,23 +58,59 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 ```java
 
-// TODO: demo code
+import com.dork.app.react.api.invoker.*;
+import com.dork.app.react.api.invoker.auth.*;
+import com.dork.app.react.api.model.*;
+import com.dork.app.react.api.AuthApi;
+
+import java.io.File;
+import java.util.*;
+
+public class AuthApiExample {
+
+    public static void main(String[] args) {
+        
+        AuthApi apiInstance = new AuthApi();
+        String id = "id_example"; // String | 
+        try {
+            apiInstance.apiAuthByIdGet(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#apiAuthByIdGet");
+            e.printStackTrace();
+        }
+    }
+}
 
 ```
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://fruity-app.at/froody*
+All URIs are relative to *https://localhost/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthApi* | [**todoGet**](docs/AuthApi.md#todoGet) | **GET** /auth/todo | 
-*UserApi* | [**userLoginGet**](docs/UserApi.md#userLoginGet) | **GET** /user/login | User Id
+*AuthApi* | [**apiAuthByIdGet**](docs/AuthApi.md#apiAuthByIdGet) | **GET** /api/Auth/{id} | 
+*AuthApi* | [**apiAuthLoginPost**](docs/AuthApi.md#apiAuthLoginPost) | **POST** /api/Auth/login | 
+*AuthApi* | [**apiAuthLogoutPost**](docs/AuthApi.md#apiAuthLogoutPost) | **POST** /api/Auth/logout | 
+*InitApi* | [**apiInitProfileGet**](docs/InitApi.md#apiInitProfileGet) | **GET** /api/Init/profile | 
+*InitApi* | [**apiInitProfilePost**](docs/InitApi.md#apiInitProfilePost) | **POST** /api/Init/profile | 
+*InitApi* | [**apiInitUserGet**](docs/InitApi.md#apiInitUserGet) | **GET** /api/Init/user | 
+*InitApi* | [**apiInitUserPost**](docs/InitApi.md#apiInitUserPost) | **POST** /api/Init/user | 
+*MessageApi* | [**apiMessageActsGet**](docs/MessageApi.md#apiMessageActsGet) | **GET** /api/Message/acts | 
+*ProfileApi* | [**apiProfileByIdDelete**](docs/ProfileApi.md#apiProfileByIdDelete) | **DELETE** /api/Profile/{id} | 
+*ProfileApi* | [**apiProfileGet**](docs/ProfileApi.md#apiProfileGet) | **GET** /api/Profile | 
+*ProfileApi* | [**apiProfilePost**](docs/ProfileApi.md#apiProfilePost) | **POST** /api/Profile | 
+*ProfileApi* | [**apiProfilePut**](docs/ProfileApi.md#apiProfilePut) | **PUT** /api/Profile | 
 
 
 ## Documentation for Models
 
- - [Auth](docs/Auth.md)
+ - [ActMessage](docs/ActMessage.md)
+ - [ContactInfo](docs/ContactInfo.md)
+ - [Content](docs/Content.md)
+ - [LoginCredentials](docs/LoginCredentials.md)
+ - [Profile](docs/Profile.md)
+ - [User](docs/User.md)
 
 
 ## Documentation for Authorization
