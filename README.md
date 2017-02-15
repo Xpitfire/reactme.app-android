@@ -27,7 +27,7 @@ License: **Apache License 2.0**
 
 <table>
   <tr>
-    <td> <img src="" alt="Friends view"/> </td>
+    <td> <img src="https://raw.githubusercontent.com/Xpitfire/dork.app-android/master/doc/screenshots/Screenshot_20170215-221342.png?token=AGtkC_MOye1bIbFo-bI3XoTpvvC-OUWpks5Yrf_ZwA%3D%3D" alt="Login view" width="300"/> </td>
     <td> <img src="" alt="Wild acts view"/> </td>
   </tr><tr>
     <td> <img src="" alt="My acts view"/> </td>
