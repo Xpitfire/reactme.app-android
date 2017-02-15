@@ -58,29 +58,7 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 ```java
 
-import io.github.froodyapp.api.invoker.*;
-import io.github.froodyapp.api.invoker.auth.*;
-import io.github.froodyapp.api.model_.*;
-import io.github.froodyapp.api.api.AdminApi;
-
-import java.io.File;
-import java.util.*;
-
-public class AdminApiExample {
-
-    public static void main(String[] args) {
-        
-        AdminApi apiInstance = new AdminApi();
-        String adminCode = "adminCode_example"; // String | AdminCode - defined in config.php
-        try {
-            ResponseOk result = apiInstance.adminCleanupGet(adminCode);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling AdminApi#adminCleanupGet");
-            e.printStackTrace();
-        }
-    }
-}
+// TODO: demo code
 
 ```
 
@@ -90,27 +68,13 @@ All URIs are relative to *https://fruity-app.at/froody*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AdminApi* | [**adminCleanupGet**](docs/AdminApi.md#adminCleanupGet) | **GET** /admin/cleanup | 
-*BlockApi* | [**blockGetGet**](docs/BlockApi.md#blockGetGet) | **GET** /block/get | 
-*BlockApi* | [**blockInfoGet**](docs/BlockApi.md#blockInfoGet) | **GET** /block/info | 
-*BlockApi* | [**blockInfoRandomGet**](docs/BlockApi.md#blockInfoRandomGet) | **GET** /block/info/random | 
-*EntryApi* | [**entryAddPost**](docs/EntryApi.md#entryAddPost) | **POST** /entry/add | Add a FroodyEntry with details
-*EntryApi* | [**entryByIdGet**](docs/EntryApi.md#entryByIdGet) | **GET** /entry/byId | 
-*EntryApi* | [**entryDeleteGet**](docs/EntryApi.md#entryDeleteGet) | **GET** /entry/delete | Delete an Entry
-*EntryApi* | [**entryPopularEntryTypesGet**](docs/EntryApi.md#entryPopularEntryTypesGet) | **GET** /entry/popularEntryTypes | 
-*StatsApi* | [**statsOverallGet**](docs/StatsApi.md#statsOverallGet) | **GET** /stats/overall | 
-*UserApi* | [**userIsEnabledGet**](docs/UserApi.md#userIsEnabledGet) | **GET** /user/isEnabled | 
-*UserApi* | [**userRegisterGet**](docs/UserApi.md#userRegisterGet) | **GET** /user/register | User Id
+*AuthApi* | [**todoGet**](docs/AuthApi.md#todoGet) | **GET** /auth/todo | 
+*UserApi* | [**userLoginGet**](docs/UserApi.md#userLoginGet) | **GET** /user/login | User Id
 
 
 ## Documentation for Models
 
- - [BlockInfo](docs/BlockInfo.md)
- - [FroodyEntry](docs/FroodyEntry.md)
- - [FroodyUser](docs/FroodyUser.md)
- - [ResponseEntryAdd](docs/ResponseEntryAdd.md)
- - [ResponseOk](docs/ResponseOk.md)
- - [ServerOverallStats](docs/ServerOverallStats.md)
+ - [Auth](docs/Auth.md)
 
 
 ## Documentation for Authorization
