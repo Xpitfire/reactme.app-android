@@ -9,6 +9,7 @@ android:
     - extra-android-m2repository
     - extra-google-android-support
     - android-25
+sudo: required
 before_script: 
   - chmod +x gradlew
     
