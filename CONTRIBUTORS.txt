@@ -1,0 +1,10 @@
+00l>> This file contains references to people who contributed to the app.
+01l>>  
+02l>> Schemes:  
+03l>>   Firstname Lastname (Link): Text  
+04l>>   Firstname Lastname (E-Mail): Text  
+05l>>   Username (Link): Text  
+06l>>   Username (E-Mail): Text  
+## 99l CONTRIBUTORS
+Florian Wurm (http://www.untitled-no1.at/): Backend Developer
+Raphael Kimeswenger (raphael@kimeswenger.at): Idea, Domain and App Co-Developer
