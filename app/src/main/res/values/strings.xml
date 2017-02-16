@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">React</string>
+    <string name="app_name">react</string>
     <string name="action_settings">Settings</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -17,4 +17,9 @@
     <string name="title_activity_main_swipe">MainSwipeActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="server_default">http://dork-943e.azurewebsites.net</string>
+
+    <!-- errors -->
+    <string name="error_bad_permissions">Please give reactMe the permissions to access the camera and write data to function properly. The app cannot be used without these features.</string>
+    <string name="login_failed">Login failed</string>
+
 </resources>

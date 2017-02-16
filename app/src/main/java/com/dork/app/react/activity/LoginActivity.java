@@ -1,4 +1,4 @@
-package com.dork.app.react;
+package com.dork.app.react.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 // swagger api
+import com.dork.app.react.R;
 import com.dork.app.react.api.invoker.ApiCallback;
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.AuthApi;
@@ -170,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
     }
 

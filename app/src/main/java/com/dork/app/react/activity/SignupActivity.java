@@ -1,4 +1,4 @@
-package com.dork.app.react;
+package com.dork.app.react.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dork.app.react.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

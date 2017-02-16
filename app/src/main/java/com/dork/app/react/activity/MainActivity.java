@@ -1,4 +1,4 @@
-package com.dork.app.react;
+package com.dork.app.react.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dork.app.react.R;
 import com.dork.app.react.fragment.UserFragment;
 import com.dork.app.react.api.model.User;
 
