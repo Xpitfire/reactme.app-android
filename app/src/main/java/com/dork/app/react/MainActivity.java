@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dork.app.react.fragment.UserFragment;
-import com.dork.app.react.model.domain.User;
+import com.dork.app.react.api.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

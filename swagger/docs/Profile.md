@@ -8,21 +8,21 @@ Name | Type | Description | Notes
 **lastName** | **String** |  |  [optional]
 **image** | [**Content**](Content.md) |  |  [optional]
 **friendIds** | **List&lt;String&gt;** |  |  [optional]
-**invitationOptions** | [**List&lt;InvitationOptionsEnum&gt;**](#List&lt;InvitationOptionsEnum&gt;) |  |  [optional]
+**invitationOptions** | [**InvitationOptionsEnum**](#InvitationOptionsEnum) |  |  [optional]
 **contactInfo** | [**ContactInfo**](ContactInfo.md) |  |  [optional]
 **id** | **String** |  |  [optional]
 
 
-<a name="List<InvitationOptionsEnum>"></a>
-## Enum: List&lt;InvitationOptionsEnum&gt;
+<a name="InvitationOptionsEnum"></a>
+## Enum: InvitationOptionsEnum
 Name | Value
 ---- | -----
-_0 | &quot;0&quot;
-_1 | &quot;1&quot;
-_2 | &quot;2&quot;
-_3 | &quot;3&quot;
-_4 | &quot;4&quot;
-_5 | &quot;5&quot;
+NUMBER_0 | 0
+NUMBER_1 | 1
+NUMBER_2 | 2
+NUMBER_3 | 3
+NUMBER_4 | 4
+NUMBER_5 | 5
 
 
 

@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * ContactInfo
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T00:09:39.325+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T02:11:12.887+01:00")
 public class ContactInfo {
   @SerializedName("facebookAccount")
   private String facebookAccount = null;

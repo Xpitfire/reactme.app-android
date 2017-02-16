@@ -3,7 +3,6 @@ package com.dork.app.react;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.ActionMenuItemView;
 import android.util.Log;
 
 import android.content.Intent;
@@ -15,6 +14,15 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+// swagger api
+import com.dork.app.react.api.invoker.ApiCallback;
+import com.dork.app.react.api.invoker.ApiException;
+import com.dork.app.react.api.AuthApi;
+import com.dork.app.react.api.model.LoginCredentials;
+
+import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -62,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        Log.d(TAG, "Login");
+        Log.d(TAG, "Validate login request");
 
         if (!validate()) {
             onLoginFailed();
@@ -83,16 +91,55 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // On complete call either onLoginSuccess or onLoginFailed
-                onLoginSuccess();
-                // onLoginFailed();
-                progressDialog.dismiss();
-            }
-        }, 3000);
+        Log.d(TAG, "Handle login request");
+
+        AuthApi apiInstance = new AuthApi();
+        LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials
+        loginCredentials.setUsername("admin@dork.com");
+        loginCredentials.setPasswordHash("4f21204dae3bffe3fa8869114d1cedcd");
+        try {
+            apiInstance.apiAuthLoginPostAsync(loginCredentials, new ApiCallback<Void>() {
+                @Override
+                public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // On complete call onLoginFailed
+                            onLoginFailed();
+                            // onLoginFailed();
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+
+                @Override
+                public void onSuccess(Void result, int statusCode, Map<String, List<String>> responseHeaders) {
+                    Log.d(TAG, "Login success!");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // On complete call onLoginSuccess
+                            onLoginSuccess();
+                            // onLoginFailed();
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+
+                @Override
+                public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                }
+
+                @Override
+                public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                }
+            });
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#apiAuthLoginPost");
+            e.printStackTrace();
+            onLoginFailed();
+            return;
+        }
     }
 
     @Override
@@ -120,7 +167,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
     }
 

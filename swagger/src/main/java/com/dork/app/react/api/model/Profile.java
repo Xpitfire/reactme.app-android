@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Profile
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T00:09:39.325+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T02:11:12.887+01:00")
 public class Profile {
   @SerializedName("firstName")
   private String firstName = null;
@@ -43,23 +43,23 @@ public class Profile {
    * Gets or Sets invitationOptions
    */
   public enum InvitationOptionsEnum {
-    @SerializedName(""0"")
-    _0("0"),
+    @SerializedName("0")
+    NUMBER_0(0),
     
-    @SerializedName(""1"")
-    _1("1"),
+    @SerializedName("1")
+    NUMBER_1(1),
     
-    @SerializedName(""2"")
-    _2("2"),
+    @SerializedName("2")
+    NUMBER_2(2),
     
-    @SerializedName(""3"")
-    _3("3"),
+    @SerializedName("3")
+    NUMBER_3(3),
     
-    @SerializedName(""4"")
-    _4("4"),
+    @SerializedName("4")
+    NUMBER_4(4),
     
-    @SerializedName(""5"")
-    _5("5");
+    @SerializedName("5")
+    NUMBER_5(5);
 
     private Integer value;
 
@@ -74,7 +74,7 @@ public class Profile {
   }
 
   @SerializedName("invitationOptions")
-  private List<InvitationOptionsEnum> invitationOptions = new ArrayList<InvitationOptionsEnum>();
+  private InvitationOptionsEnum invitationOptions = null;
 
   @SerializedName("contactInfo")
   private ContactInfo contactInfo = null;
@@ -159,13 +159,8 @@ public class Profile {
     this.friendIds = friendIds;
   }
 
-  public Profile invitationOptions(List<InvitationOptionsEnum> invitationOptions) {
+  public Profile invitationOptions(InvitationOptionsEnum invitationOptions) {
     this.invitationOptions = invitationOptions;
-    return this;
-  }
-
-  public Profile addInvitationOptionsItem(InvitationOptionsEnum invitationOptionsItem) {
-    this.invitationOptions.add(invitationOptionsItem);
     return this;
   }
 
@@ -174,11 +169,11 @@ public class Profile {
    * @return invitationOptions
   **/
   @ApiModelProperty(example = "null", value = "")
-  public List<InvitationOptionsEnum> getInvitationOptions() {
+  public InvitationOptionsEnum getInvitationOptions() {
     return invitationOptions;
   }
 
-  public void setInvitationOptions(List<InvitationOptionsEnum> invitationOptions) {
+  public void setInvitationOptions(InvitationOptionsEnum invitationOptions) {
     this.invitationOptions = invitationOptions;
   }
 
