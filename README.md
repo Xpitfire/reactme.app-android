@@ -3,6 +3,9 @@
 [![Build Status](https://travis-ci.com/Xpitfire/dork.app-android.svg?token=sHWssDoyyNFRZYWr8UQ5&branch=master)](https://travis-ci.com/Xpitfire/dork.app-android)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/dorkapp-android/localized.svg)](https://crowdin.com/project/dorkapp-android)
 
+##[Download APK](https://mega.nz/#!2tdzQRoY!XMoLYS2neQAMEgwjBE_BgQsRxov_WkKs5DPEiTVBHps)
+
+
 Android part of the reactMe application.  
 Developed and maintained by [Dinu Marius-Constantin](<https://github.com/Xpitfire>), 2017-  
 License: **Apache License 2.0**
