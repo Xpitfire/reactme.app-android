@@ -20,6 +20,9 @@ import com.dork.app.react.api.invoker.ApiCallback;
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.AuthApi;
 import com.dork.app.react.api.model.LoginCredentials;
+import com.dork.app.react.event.LoginMessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
@@ -162,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        EventBus.getDefault().post(new LoginMessageEvent());
         finish();
     }
 

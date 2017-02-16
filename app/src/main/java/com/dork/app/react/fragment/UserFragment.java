@@ -16,6 +16,11 @@ import com.dork.app.react.api.InitApi;
 import com.dork.app.react.api.invoker.ApiCallback;
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.model.User;
+import com.dork.app.react.event.LoginMessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,52 +83,12 @@ public class UserFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
-            InitApi api = new InitApi();
-            try {
-                api.apiInitUserGetAsync(new ApiCallback<Void>() {
-                    @Override
-                    public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                        Log.d("Dork-Fragment", "InitApi get failed!");
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recyclerView.setAdapter(
-                                        new UserRecyclerViewAdapter(
-                                                new ArrayList<User>(),
-                                                mListener));
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onSuccess(Void result, int statusCode, Map<String, List<String>> responseHeaders) {
-                        Log.d("Dork-Fragment", "InitApi get worked!");
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recyclerView.setAdapter(
-                                        new UserRecyclerViewAdapter(
-                                                new ArrayList<User>(),
-                                                mListener));
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-
-                    }
-
-                    @Override
-                    public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-
-                    }
-                });
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
+            recyclerView.setAdapter(
+                    new UserRecyclerViewAdapter(
+                            new ArrayList<User>(),
+                            mListener));
         }
+
         return view;
     }
 
@@ -133,6 +98,7 @@ public class UserFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
+            EventBus.getDefault().register(this);
         } else {
             throw new RuntimeException("Activity containing this fragment must implement OnListFragmentInteractionListener!");
         }
@@ -142,6 +108,68 @@ public class UserFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginMessageEvent(LoginMessageEvent event) {
+        final RecyclerView recyclerView = (RecyclerView) getView();
+        InitApi api = new InitApi();
+        try {
+            api.apiInitUserGetAsync(new ApiCallback<Void>() {
+                @Override
+                public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                    Log.d("Dork-Fragment", "InitApi get failed!");
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(
+                                    new UserRecyclerViewAdapter(
+                                            new ArrayList<User>(),
+                                            mListener));
+                        }
+                    });
+                }
+
+                @Override
+                public void onSuccess(Void result, int statusCode, Map<String, List<String>> responseHeaders) {
+                    Log.d("Dork-Fragment", "InitApi get worked!");
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayList<User> users = new ArrayList<>();
+                            User user;
+
+                            user = new User();
+                            user.email("test@test.com");
+                            user.username("test");
+                            users.add(user);
+                            user = new User();
+                            user.email("dork@dork.com");
+                            user.username("dork");
+                            users.add(user);
+
+                            recyclerView.setAdapter(
+                                    new UserRecyclerViewAdapter(
+                                            users,
+                                            mListener));
+                        }
+                    });
+                }
+
+                @Override
+                public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+
+                }
+
+                @Override
+                public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+
+                }
+            });
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

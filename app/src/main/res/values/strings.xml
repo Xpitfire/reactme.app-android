@@ -16,4 +16,5 @@
     <string name="already_member_login_text">Already a member? Login</string>
     <string name="title_activity_main_swipe">MainSwipeActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="server_default">http://dork-943e.azurewebsites.net</string>
 </resources>

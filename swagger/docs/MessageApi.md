@@ -1,6 +1,6 @@
 # MessageApi
 
-All URIs are relative to *https://localhost/*
+All URIs are relative to *https://dork-943e.azurewebsites.net/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

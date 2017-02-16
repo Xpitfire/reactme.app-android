@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * ActMessage
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T02:11:12.887+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-16T04:20:57.379+01:00")
 public class ActMessage {
   @SerializedName("receiverIds")
   private List<String> receiverIds = new ArrayList<String>();

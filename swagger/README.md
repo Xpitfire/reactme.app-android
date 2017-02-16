@@ -85,7 +85,7 @@ public class AuthApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost/*
+All URIs are relative to *https://dork-943e.azurewebsites.net/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
