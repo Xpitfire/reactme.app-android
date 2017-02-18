@@ -29,6 +29,12 @@ import com.dork.app.react.api.invoker.Pair;
 import com.dork.app.react.api.invoker.auth.Authentication;
 import com.dork.app.react.api.model.LoginCredentials;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -39,6 +45,7 @@ import com.google.android.gms.common.api.Scope;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -51,10 +58,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
-    @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
     @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
+    @BindView(R.id.loginFacebookButton) LoginButton _loginFacebookButton;
 
-    private boolean mSignInClicked;
+    private CallbackManager _callbackManager;
     private GoogleApiClient _googleApiClient;
 
     @Override
@@ -72,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         _loginFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onHandleLogin();
+                onHandleFacebookLogin();
             }
         });
         _loginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +97,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        configureGoogleApiClient(this);
+        configureGoogleApiClient();
+        configureFacebookApiClient();
     }
 
     public void login() {
@@ -178,9 +186,39 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    /////////////////////////// GOOGLE PLUS
+    /////////////////////////// FACEBOOK LOGIN
 
-    public void configureGoogleApiClient(Context context) {
+    public void configureFacebookApiClient() {
+        _loginFacebookButton.setReadPermissions("email");
+        _callbackManager = CallbackManager.Factory.create();
+        // Callback registration
+        _loginFacebookButton.registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // TODO: Implement successful signup logic here
+                // By default we just finish the Activity and log them in automatically
+                onLoginSuccess();
+            }
+
+            @Override
+            public void onCancel() {
+                onLoginFailed();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                onLoginFailed();
+            }
+        });
+    }
+
+    public void onHandleFacebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+    }
+
+    /////////////////////////// GOOGLE PLUS LOGIN
+
+    public void configureGoogleApiClient() {
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
         // basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -189,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
-        _googleApiClient = new GoogleApiClient.Builder(context)
+        _googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
@@ -200,8 +238,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startActivityForResult(signInIntent, REQUEST_GOOGLEPLUS_SIGNIN);
     }
 
-
-
     /////////////////////////// ACTIVITY LOGIN LOGIC
 
     @Override
@@ -210,7 +246,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
-                this.finish();
+                onLoginSuccess();
             }
         }
         if (requestCode == REQUEST_GOOGLEPLUS_SIGNIN) {
@@ -222,11 +258,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
-                this.finish();
+                onLoginSuccess();
             } else {
                 Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
             }
         }
+        _callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

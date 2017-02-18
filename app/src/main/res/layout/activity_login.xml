@@ -69,18 +69,23 @@
             android:gravity="center"
             android:textSize="16sp"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/loginFacebookButton"
             android:scaleType="centerInside"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="24dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             style="@style/FacebookLoginButton"
             android:text="@string/facebook_login"
-            android:layout_height="50dp" />
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/loginGooglePlusButton"
             android:scaleType="centerInside"
             android:layout_width="wrap_content"
+            android:paddingLeft="24dp"
             style="@style/GooglePlusLoginButton"
             android:text="@string/google_plus_login"
             android:layout_height="50dp" />

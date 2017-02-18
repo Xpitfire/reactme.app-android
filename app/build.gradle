@@ -74,6 +74,7 @@ dependencies {
     // authentication libraries
     compile 'com.google.android.gms:play-services:10.2.0'
     compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
 	// Testing-only dependencies
     testCompile 'junit:junit:4.12'
