@@ -15,9 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:drawableTop="@drawable/logo_simple"
-        android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primary_darker"
-        android:textSize="32sp" />
+        android:textSize="30sp" />
 
 </RelativeLayout>

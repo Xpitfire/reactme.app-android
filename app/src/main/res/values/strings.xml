@@ -21,5 +21,7 @@
     <!-- errors -->
     <string name="error_bad_permissions">Please give reactMe the permissions to access the camera and write data to function properly. The app cannot be used without these features.</string>
     <string name="login_failed">Login failed</string>
+    <string name="error_couldnt_connect_or_register">Could not verify or register user!</string>
+    <string name="error_couldnt_check_user_id">Error: Could not check user id!</string>
 
 </resources>

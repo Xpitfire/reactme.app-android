@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class AppSettings {
     private static final String ARRAY_SEPARATOR = "%%";
     public static final String SHARED_PREF_APP = "app";
+    public static final String DEFAULT_STRING = "<EMPTY_STRING>";
 
     private final SharedPreferences prefApp;
     private final Context context;
@@ -104,5 +105,13 @@ public class AppSettings {
 
     public String getReactServer() {
         return getString(R.string.pref_key__react_server, context.getString(R.string.server_default));
+    }
+
+    public String getUserId() {
+        return getString(R.string.pref_key__user_id, DEFAULT_STRING);
+    }
+
+    public boolean hasUserId() {
+        return getUserId() != null && !getUserId().equals(DEFAULT_STRING);
     }
 }

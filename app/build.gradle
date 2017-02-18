@@ -11,6 +11,7 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 1
         versionName "0.0.1"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -68,7 +69,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'org.greenrobot:eventbus:3.0.0'
-    
+    compile 'com.android.support:multidex:1.0.1'
+
+    // authentication libraries
+    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services-auth:10.2.0'
+
 	// Testing-only dependencies
     testCompile 'junit:junit:4.12'
 	androidTestCompile 'com.android.support:support-annotations:25.1.1'
@@ -82,8 +88,9 @@ dependencies {
     })
     // UI testing with UI Automator
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-
 }
+
+apply plugin: 'com.google.gms.google-services'
 
 final String RAW_DIR = "app/src/main/res/raw"
 final String[] ROOT_TO_RAW_COPYFILES = ["README.md", "LICENSE.md", "CHANGELOG.md", "CONTRIBUTORS.txt"]

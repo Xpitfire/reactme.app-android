@@ -1,7 +1,10 @@
 package com.dork.app.react.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -16,21 +19,33 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 // swagger api
+import com.dork.app.react.App;
 import com.dork.app.react.R;
 import com.dork.app.react.api.invoker.ApiCallback;
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.AuthApi;
+import com.dork.app.react.api.invoker.Configuration;
+import com.dork.app.react.api.invoker.Pair;
+import com.dork.app.react.api.invoker.auth.Authentication;
 import com.dork.app.react.api.model.LoginCredentials;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private static final int REQUEST_GOOGLEPLUS_SIGNIN = 1;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -38,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.link_signup) TextView _signupLink;
     @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
     @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
+
+    private boolean mSignInClicked;
+    private GoogleApiClient _googleApiClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         _loginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onHandleLogin();
+                onHandleGooglePlusLogin();
             }
         });
         _signupLink.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+
+        configureGoogleApiClient(this);
     }
 
     public void login() {
@@ -92,15 +112,20 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        //final String email = _emailText.getText().toString();
+        //final String password = _passwordText.getText().toString();
+
+        final String email = "admin@dork.com";
+        final String password = "4f21204dae3bffe3fa8869114d1cedcd";
 
         Log.d(TAG, "Handle login request");
 
-        AuthApi apiInstance = new AuthApi();
         LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials
-        loginCredentials.setUsername("admin@dork.com");
-        loginCredentials.setPasswordHash("4f21204dae3bffe3fa8869114d1cedcd");
+        loginCredentials.setUsername(email);
+        loginCredentials.setPasswordHash(password);
+
+        AuthApi apiInstance = new AuthApi();
+
         try {
             apiInstance.apiAuthLoginPostAsync(loginCredentials, new ApiCallback<Void>() {
                 @Override
@@ -117,8 +142,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onSuccess(Void result, int statusCode, Map<String, List<String>> responseHeaders) {
+                public void onSuccess(Void result, int statusCode, final Map<String, List<String>> responseHeaders) {
                     Log.d(TAG, "Login success!");
+                    Configuration.getDefaultApiClient().getAuthentications().put("auth", new Authentication() {
+
+                        @Override
+                        public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
+                            //headerParams.putAll(responseHeaders));
+                        }
+                    });
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -146,16 +178,60 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /////////////////////////// GOOGLE PLUS
+
+    public void configureGoogleApiClient(Context context) {
+        // Configure sign-in to request the user's ID, email address, and basic profile. ID and
+        // basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
+        _googleApiClient = new GoogleApiClient.Builder(context)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    private void onHandleGooglePlusLogin() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(_googleApiClient);
+        startActivityForResult(signInIntent, REQUEST_GOOGLEPLUS_SIGNIN);
+    }
+
+
+
+    /////////////////////////// ACTIVITY LOGIN LOGIC
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
         }
+        if (requestCode == REQUEST_GOOGLEPLUS_SIGNIN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                GoogleSignInAccount acct = result.getSignInAccount();
+                String personEmail = acct.getEmail();
+                App.log(getClass(), personEmail);
+
+                // TODO: Implement successful signup logic here
+                // By default we just finish the Activity and log them in automatically
+                this.finish();
+            } else {
+                Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        onLoginFailed();
     }
 
     @Override
@@ -197,4 +273,5 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
 }

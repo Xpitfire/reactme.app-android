@@ -5,6 +5,7 @@ tmp/
 *.tmp
 *.bak
 *.log
+google-services.json
 
 ################
 ### Intellij ###

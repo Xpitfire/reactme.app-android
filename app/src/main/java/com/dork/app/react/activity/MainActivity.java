@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.dork.app.react.R;
 import com.dork.app.react.fragment.UserFragment;
 import com.dork.app.react.api.model.User;
+import com.dork.app.react.util.AppSettings;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,8 +74,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
             }
         });
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        verifyLogin();
+    }
+
+    private void verifyLogin() {
+        AppSettings settings = new AppSettings(this);
+        if (!settings.hasUserId()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
 
