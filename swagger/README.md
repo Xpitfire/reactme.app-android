@@ -71,11 +71,12 @@ public class AuthApiExample {
     public static void main(String[] args) {
         
         AuthApi apiInstance = new AuthApi();
-        String id = "id_example"; // String | 
+        LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials | 
         try {
-            apiInstance.apiAuthByIdGet(id);
+            Boolean result = apiInstance.apiAuthLoginPost(loginCredentials);
+            System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling AuthApi#apiAuthByIdGet");
+            System.err.println("Exception when calling AuthApi#apiAuthLoginPost");
             e.printStackTrace();
         }
     }
@@ -85,22 +86,20 @@ public class AuthApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://dork-943e.azurewebsites.net/*
+All URIs are relative to *https://localhost/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthApi* | [**apiAuthByIdGet**](docs/AuthApi.md#apiAuthByIdGet) | **GET** /api/Auth/{id} | 
 *AuthApi* | [**apiAuthLoginPost**](docs/AuthApi.md#apiAuthLoginPost) | **POST** /api/Auth/login | 
 *AuthApi* | [**apiAuthLogoutPost**](docs/AuthApi.md#apiAuthLogoutPost) | **POST** /api/Auth/logout | 
-*InitApi* | [**apiInitProfileGet**](docs/InitApi.md#apiInitProfileGet) | **GET** /api/Init/profile | 
-*InitApi* | [**apiInitProfilePost**](docs/InitApi.md#apiInitProfilePost) | **POST** /api/Init/profile | 
-*InitApi* | [**apiInitUserGet**](docs/InitApi.md#apiInitUserGet) | **GET** /api/Init/user | 
-*InitApi* | [**apiInitUserPost**](docs/InitApi.md#apiInitUserPost) | **POST** /api/Init/user | 
-*MessageApi* | [**apiMessageActsGet**](docs/MessageApi.md#apiMessageActsGet) | **GET** /api/Message/acts | 
-*ProfileApi* | [**apiProfileByIdDelete**](docs/ProfileApi.md#apiProfileByIdDelete) | **DELETE** /api/Profile/{id} | 
-*ProfileApi* | [**apiProfileGet**](docs/ProfileApi.md#apiProfileGet) | **GET** /api/Profile | 
-*ProfileApi* | [**apiProfilePost**](docs/ProfileApi.md#apiProfilePost) | **POST** /api/Profile | 
-*ProfileApi* | [**apiProfilePut**](docs/ProfileApi.md#apiProfilePut) | **PUT** /api/Profile | 
+*MessageApi* | [**apiMessageMessageRecentActByIdPost**](docs/MessageApi.md#apiMessageMessageRecentActByIdPost) | **POST** /api/Message/message/recent/act/{id} | 
+*ProfileApi* | [**apiProfileProfileByIdGet**](docs/ProfileApi.md#apiProfileProfileByIdGet) | **GET** /api/Profile/profile/{id} | 
+*ProfileApi* | [**apiProfileProfileCreatePost**](docs/ProfileApi.md#apiProfileProfileCreatePost) | **POST** /api/Profile/profile/create | 
+*UserApi* | [**apiUserFriendsPost**](docs/UserApi.md#apiUserFriendsPost) | **POST** /api/User/friends | 
+*UserApi* | [**apiUserUserByIdGet**](docs/UserApi.md#apiUserUserByIdGet) | **GET** /api/User/user/{id} | 
+*UserApi* | [**apiUserUserCreatePost**](docs/UserApi.md#apiUserUserCreatePost) | **POST** /api/User/user/create | 
+*UserApi* | [**apiUserUserDeleteByIdDelete**](docs/UserApi.md#apiUserUserDeleteByIdDelete) | **DELETE** /api/User/user/delete/{id} | 
+*UserApi* | [**apiUserUserUpdatePut**](docs/UserApi.md#apiUserUserUpdatePut) | **PUT** /api/User/user/update | 
 
 
 ## Documentation for Models
@@ -109,6 +108,7 @@ Class | Method | HTTP request | Description
  - [ContactInfo](docs/ContactInfo.md)
  - [Content](docs/Content.md)
  - [LoginCredentials](docs/LoginCredentials.md)
+ - [Page](docs/Page.md)
  - [Profile](docs/Profile.md)
  - [User](docs/User.md)
 

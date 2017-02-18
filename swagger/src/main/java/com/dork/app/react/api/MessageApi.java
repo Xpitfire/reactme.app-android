@@ -28,6 +28,8 @@ import java.io.IOException;
 
 
 import com.dork.app.react.api.model.ActMessage;
+import com.dork.app.react.api.model.Page;
+import com.dork.app.react.api.model.User;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -54,12 +56,13 @@ public class MessageApi {
         this.apiClient = apiClient;
     }
 
-    /* Build call for apiMessageActsGet */
-    private com.squareup.okhttp.Call apiMessageActsGetCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    /* Build call for apiMessageMessageRecentActByIdPost */
+    private com.squareup.okhttp.Call apiMessageMessageRecentActByIdPostCall(String id, User user, Page page, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = page;
         
         // create path and map variables
-        String localVarPath = "/api/Message/acts".replaceAll("\\{format\\}","json");
+        String localVarPath = "/api/Message/message/recent/act/{id}".replaceAll("\\{format\\}","json")
+        .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -74,7 +77,7 @@ public class MessageApi {
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            
+            "application/json", "text/json", "application/json-patch+json", "application/json", "text/json", "application/json-patch+json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -92,14 +95,19 @@ public class MessageApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call apiMessageActsGetValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call apiMessageMessageRecentActByIdPostValidateBeforeCall(String id, User user, Page page, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling apiMessageMessageRecentActByIdPost(Async)");
+        }
         
         
-        com.squareup.okhttp.Call call = apiMessageActsGetCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = apiMessageMessageRecentActByIdPostCall(id, user, page, progressListener, progressRequestListener);
         return call;
 
         
@@ -111,22 +119,28 @@ public class MessageApi {
     /**
      * 
      * 
+     * @param id  (required)
+     * @param user  (optional)
+     * @param page  (optional)
      * @return List&lt;ActMessage&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<ActMessage> apiMessageActsGet() throws ApiException {
-        ApiResponse<List<ActMessage>> resp = apiMessageActsGetWithHttpInfo();
+    public List<ActMessage> apiMessageMessageRecentActByIdPost(String id, User user, Page page) throws ApiException {
+        ApiResponse<List<ActMessage>> resp = apiMessageMessageRecentActByIdPostWithHttpInfo(id, user, page);
         return resp.getData();
     }
 
     /**
      * 
      * 
+     * @param id  (required)
+     * @param user  (optional)
+     * @param page  (optional)
      * @return ApiResponse&lt;List&lt;ActMessage&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<ActMessage>> apiMessageActsGetWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = apiMessageActsGetValidateBeforeCall(null, null);
+    public ApiResponse<List<ActMessage>> apiMessageMessageRecentActByIdPostWithHttpInfo(String id, User user, Page page) throws ApiException {
+        com.squareup.okhttp.Call call = apiMessageMessageRecentActByIdPostValidateBeforeCall(id, user, page, null, null);
         Type localVarReturnType = new TypeToken<List<ActMessage>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -134,11 +148,14 @@ public class MessageApi {
     /**
      *  (asynchronously)
      * 
+     * @param id  (required)
+     * @param user  (optional)
+     * @param page  (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call apiMessageActsGetAsync(final ApiCallback<List<ActMessage>> callback) throws ApiException {
+    public com.squareup.okhttp.Call apiMessageMessageRecentActByIdPostAsync(String id, User user, Page page, final ApiCallback<List<ActMessage>> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -159,7 +176,7 @@ public class MessageApi {
             };
         }
 
-        com.squareup.okhttp.Call call = apiMessageActsGetValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = apiMessageMessageRecentActByIdPostValidateBeforeCall(id, user, page, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<List<ActMessage>>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

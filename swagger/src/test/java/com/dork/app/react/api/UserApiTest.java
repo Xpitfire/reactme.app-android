@@ -14,7 +14,6 @@
 package com.dork.app.react.api;
 
 import com.dork.app.react.api.invoker.ApiException;
-import com.dork.app.react.api.model.Profile;
 import com.dork.app.react.api.model.User;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -25,12 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * API tests for InitApi
+ * API tests for UserApi
  */
 @Ignore
-public class InitApiTest {
+public class UserApiTest {
 
-    private final InitApi api = new InitApi();
+    private final UserApi api = new UserApi();
 
     
     /**
@@ -42,55 +41,73 @@ public class InitApiTest {
      *          if the Api call fails
      */
     @Test
-    public void apiInitProfileGetTest() throws ApiException {
-        api.apiInitProfileGet();
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void apiInitProfilePostTest() throws ApiException {
-        Profile profile = null;
-        api.apiInitProfilePost(profile);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void apiInitUserGetTest() throws ApiException {
-        api.apiInitUserGet();
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void apiInitUserPostTest() throws ApiException {
+    public void apiUserFriendsPostTest() throws ApiException {
         User user = null;
-        api.apiInitUserPost(user);
+        List<User> response = api.apiUserFriendsPost(user);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void apiUserUserByIdGetTest() throws ApiException {
+        String id = null;
+        User response = api.apiUserUserByIdGet(id);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void apiUserUserCreatePostTest() throws ApiException {
+        User user = null;
+        Long response = api.apiUserUserCreatePost(user);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void apiUserUserDeleteByIdDeleteTest() throws ApiException {
+        String id = null;
+        Long response = api.apiUserUserDeleteByIdDelete(id);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void apiUserUserUpdatePutTest() throws ApiException {
+        User value = null;
+        Long response = api.apiUserUserUpdatePut(value);
 
         // TODO: test validations
     }

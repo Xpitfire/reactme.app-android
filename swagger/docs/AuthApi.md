@@ -1,59 +1,16 @@
 # AuthApi
 
-All URIs are relative to *https://dork-943e.azurewebsites.net/*
+All URIs are relative to *https://localhost/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiAuthByIdGet**](AuthApi.md#apiAuthByIdGet) | **GET** /api/Auth/{id} | 
 [**apiAuthLoginPost**](AuthApi.md#apiAuthLoginPost) | **POST** /api/Auth/login | 
 [**apiAuthLogoutPost**](AuthApi.md#apiAuthLogoutPost) | **POST** /api/Auth/logout | 
 
 
-<a name="apiAuthByIdGet"></a>
-# **apiAuthByIdGet**
-> apiAuthByIdGet(id)
-
-
-
-### Example
-```java
-// Import classes:
-//import com.dork.app.react.api.invoker.ApiException;
-//import com.dork.app.react.api.AuthApi;
-
-
-AuthApi apiInstance = new AuthApi();
-String id = "id_example"; // String | 
-try {
-    apiInstance.apiAuthByIdGet(id);
-} catch (ApiException e) {
-    System.err.println("Exception when calling AuthApi#apiAuthByIdGet");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
 <a name="apiAuthLoginPost"></a>
 # **apiAuthLoginPost**
-> apiAuthLoginPost(loginCredentials)
+> Boolean apiAuthLoginPost(loginCredentials)
 
 
 
@@ -67,7 +24,8 @@ No authorization required
 AuthApi apiInstance = new AuthApi();
 LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials | 
 try {
-    apiInstance.apiAuthLoginPost(loginCredentials);
+    Boolean result = apiInstance.apiAuthLoginPost(loginCredentials);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling AuthApi#apiAuthLoginPost");
     e.printStackTrace();
@@ -82,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Boolean**
 
 ### Authorization
 
@@ -91,7 +49,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/json-patch+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 <a name="apiAuthLogoutPost"></a>
 # **apiAuthLogoutPost**

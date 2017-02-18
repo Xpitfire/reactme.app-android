@@ -6,15 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dork.app.react.R;
-import com.dork.app.react.api.InitApi;
-import com.dork.app.react.api.invoker.ApiCallback;
-import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.model.User;
 import com.dork.app.react.event.LoginMessageEvent;
 
@@ -23,8 +19,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 
@@ -114,9 +108,10 @@ public class UserFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginMessageEvent(LoginMessageEvent event) {
         final RecyclerView recyclerView = (RecyclerView) getView();
+        /*
         InitApi api = new InitApi();
         try {
-            api.apiInitUserGetAsync(new ApiCallback<Void>() {
+            api.apiInitUserGetAsync(new ApiCallback<List<User>>() {
                 @Override
                 public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                     Log.d("Dork-Fragment", "InitApi get failed!");
@@ -132,7 +127,7 @@ public class UserFragment extends Fragment {
                 }
 
                 @Override
-                public void onSuccess(Void result, int statusCode, Map<String, List<String>> responseHeaders) {
+                public void onSuccess(List<User> result, int statusCode, Map<String, List<String>> responseHeaders) {
                     Log.d("Dork-Fragment", "InitApi get worked!");
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -170,6 +165,23 @@ public class UserFragment extends Fragment {
         } catch (ApiException e) {
             e.printStackTrace();
         }
+        */
+        ArrayList<User> users = new ArrayList<>();
+        User user;
+
+        user = new User();
+        user.email("test@test.com");
+        user.username("test");
+        users.add(user);
+        user = new User();
+        user.email("dork@dork.com");
+        user.username("dork");
+        users.add(user);
+
+        recyclerView.setAdapter(
+                new UserRecyclerViewAdapter(
+                        users,
+                        mListener));
     }
 
     /**

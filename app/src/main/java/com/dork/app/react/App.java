@@ -5,8 +5,13 @@ import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.dork.app.react.api.PersistentCookieStore;
 import com.dork.app.react.api.invoker.Configuration;
 import com.dork.app.react.util.AppSettings;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 
 /**
  * Created by Xpitfire on 16.02.2017.
@@ -39,6 +44,11 @@ public class App extends MultiDexApplication {
         appSettings = new AppSettings(this);
         String server = appSettings.getReactServer();
         Configuration.getDefaultApiClient().setBasePath(server);
+
+        // enable cookies
+        CookieManager cookieManager = new CookieManager(
+                new PersistentCookieStore(getApplicationContext()), CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
     }
 
     public AppSettings getAppSettings() {

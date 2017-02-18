@@ -1,6 +1,6 @@
 # InitApi
 
-All URIs are relative to *https://dork-943e.azurewebsites.net/*
+All URIs are relative to *https://localhost/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -92,7 +92,7 @@ No authorization required
 
 <a name="apiInitUserGet"></a>
 # **apiInitUserGet**
-> apiInitUserGet()
+> List&lt;User&gt; apiInitUserGet()
 
 
 
@@ -105,7 +105,8 @@ No authorization required
 
 InitApi apiInstance = new InitApi();
 try {
-    apiInstance.apiInitUserGet();
+    List<User> result = apiInstance.apiInitUserGet();
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling InitApi#apiInitUserGet");
     e.printStackTrace();
@@ -117,7 +118,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-null (empty response body)
+[**List&lt;User&gt;**](User.md)
 
 ### Authorization
 
@@ -126,7 +127,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 <a name="apiInitUserPost"></a>
 # **apiInitUserPost**

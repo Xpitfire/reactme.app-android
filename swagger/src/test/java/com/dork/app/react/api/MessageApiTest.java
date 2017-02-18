@@ -15,6 +15,8 @@ package com.dork.app.react.api;
 
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.model.ActMessage;
+import com.dork.app.react.api.model.Page;
+import com.dork.app.react.api.model.User;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -41,8 +43,11 @@ public class MessageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void apiMessageActsGetTest() throws ApiException {
-        List<ActMessage> response = api.apiMessageActsGet();
+    public void apiMessageMessageRecentActByIdPostTest() throws ApiException {
+        String id = null;
+        User user = null;
+        Page page = null;
+        List<ActMessage> response = api.apiMessageMessageRecentActByIdPost(id, user, page);
 
         // TODO: test validations
     }

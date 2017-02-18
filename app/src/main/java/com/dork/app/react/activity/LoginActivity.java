@@ -29,9 +29,11 @@ import com.dork.app.react.api.invoker.Pair;
 import com.dork.app.react.api.invoker.auth.Authentication;
 import com.dork.app.react.api.model.LoginCredentials;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private static final int REQUEST_GOOGLEPLUS_SIGNIN = 1;
+    private static final int REQUEST_FACEBOOK_SIGNIN = 2;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -97,8 +100,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        configureGoogleApiClient();
         configureFacebookApiClient();
+        configureGoogleApiClient();
     }
 
     public void login() {
@@ -114,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void onHandleLogin() {
+
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -135,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         AuthApi apiInstance = new AuthApi();
 
         try {
-            apiInstance.apiAuthLoginPostAsync(loginCredentials, new ApiCallback<Void>() {
+            apiInstance.apiAuthLoginPostAsync(loginCredentials, new ApiCallback<Boolean>() {
                 @Override
                 public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                     runOnUiThread(new Runnable() {
@@ -150,15 +154,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
 
                 @Override
-                public void onSuccess(Void result, int statusCode, final Map<String, List<String>> responseHeaders) {
+                public void onSuccess(Boolean result, int statusCode, final Map<String, List<String>> responseHeaders) {
                     Log.d(TAG, "Login success!");
-                    Configuration.getDefaultApiClient().getAuthentications().put("auth", new Authentication() {
-
-                        @Override
-                        public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
-                            //headerParams.putAll(responseHeaders));
-                        }
-                    });
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -242,6 +239,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        _callbackManager.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
                 // TODO: Implement successful signup logic here
@@ -263,7 +263,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
             }
         }
-        _callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

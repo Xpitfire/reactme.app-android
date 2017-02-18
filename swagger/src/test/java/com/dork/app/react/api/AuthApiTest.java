@@ -41,25 +41,9 @@ public class AuthApiTest {
      *          if the Api call fails
      */
     @Test
-    public void apiAuthByIdGetTest() throws ApiException {
-        String id = null;
-        api.apiAuthByIdGet(id);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
     public void apiAuthLoginPostTest() throws ApiException {
         LoginCredentials loginCredentials = null;
-        api.apiAuthLoginPost(loginCredentials);
+        Boolean response = api.apiAuthLoginPost(loginCredentials);
 
         // TODO: test validations
     }

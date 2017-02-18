@@ -43,15 +43,15 @@ public class RegisterService implements Runnable {
         AuthApi authApi = new AuthApi();
         if (settings.hasUserId()) {
             String userId = settings.getUserId();
+            /*
             try {
-                authApi.apiAuthByIdGet(userId);
+                authApi.apiAuth(userId);
             } catch (ApiException e) {
                 App.log(getClass(), context.getString(R.string.error_couldnt_check_user_id));
             }
+            */
+            return true;
         }
-
-
-
         return false;
     }
 

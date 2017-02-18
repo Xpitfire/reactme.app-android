@@ -1,15 +1,15 @@
 # MessageApi
 
-All URIs are relative to *https://dork-943e.azurewebsites.net/*
+All URIs are relative to *https://localhost/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiMessageActsGet**](MessageApi.md#apiMessageActsGet) | **GET** /api/Message/acts | 
+[**apiMessageMessageRecentActByIdPost**](MessageApi.md#apiMessageMessageRecentActByIdPost) | **POST** /api/Message/message/recent/act/{id} | 
 
 
-<a name="apiMessageActsGet"></a>
-# **apiMessageActsGet**
-> List&lt;ActMessage&gt; apiMessageActsGet()
+<a name="apiMessageMessageRecentActByIdPost"></a>
+# **apiMessageMessageRecentActByIdPost**
+> List&lt;ActMessage&gt; apiMessageMessageRecentActByIdPost(id, user, page)
 
 
 
@@ -21,17 +21,25 @@ Method | HTTP request | Description
 
 
 MessageApi apiInstance = new MessageApi();
+String id = "id_example"; // String | 
+User user = new User(); // User | 
+Page page = new Page(); // Page | 
 try {
-    List<ActMessage> result = apiInstance.apiMessageActsGet();
+    List<ActMessage> result = apiInstance.apiMessageMessageRecentActByIdPost(id, user, page);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling MessageApi#apiMessageActsGet");
+    System.err.println("Exception when calling MessageApi#apiMessageMessageRecentActByIdPost");
     e.printStackTrace();
 }
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  |
+ **user** | [**User**](User.md)|  | [optional]
+ **page** | [**Page**](Page.md)|  | [optional]
 
 ### Return type
 
@@ -43,6 +51,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, text/json, application/json-patch+json, application/json, text/json, application/json-patch+json
  - **Accept**: text/plain, application/json, text/json
 

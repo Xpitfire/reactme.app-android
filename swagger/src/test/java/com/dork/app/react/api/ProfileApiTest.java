@@ -14,7 +14,7 @@
 package com.dork.app.react.api;
 
 import com.dork.app.react.api.invoker.ApiException;
-import com.dork.app.react.api.model.User;
+import com.dork.app.react.api.model.Profile;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -41,9 +41,9 @@ public class ProfileApiTest {
      *          if the Api call fails
      */
     @Test
-    public void apiProfileByIdDeleteTest() throws ApiException {
+    public void apiProfileProfileByIdGetTest() throws ApiException {
         String id = null;
-        api.apiProfileByIdDelete(id);
+        Profile response = api.apiProfileProfileByIdGet(id);
 
         // TODO: test validations
     }
@@ -57,40 +57,9 @@ public class ProfileApiTest {
      *          if the Api call fails
      */
     @Test
-    public void apiProfileGetTest() throws ApiException {
-        api.apiProfileGet();
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void apiProfilePostTest() throws ApiException {
-        User value = null;
-        api.apiProfilePost(value);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void apiProfilePutTest() throws ApiException {
-        User value = null;
-        api.apiProfilePut(value);
+    public void apiProfileProfileCreatePostTest() throws ApiException {
+        Profile profile = null;
+        Long response = api.apiProfileProfileCreatePost(profile);
 
         // TODO: test validations
     }
