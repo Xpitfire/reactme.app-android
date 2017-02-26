@@ -1,4 +1,4 @@
-#![reactMe](https://raw.githubusercontent.com/Xpitfire/dork.app-android/master/app/src/main/res/drawable/logo_small.png?token=AGtkC41VtyWjxPvgwX3bVT6_ImRpLKlkks5Yrf42wA%3D%3D) reactMe-Android
+#![reactMe](app/src/main/res/drawable/logo_small.png) reactMe-Android
 
 [![Build Status](https://travis-ci.com/Xpitfire/dork.app-android.svg?token=sHWssDoyyNFRZYWr8UQ5&branch=master)](https://travis-ci.com/Xpitfire/dork.app-android)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/dorkapp-android/localized.svg)](https://crowdin.com/project/dorkapp-android)
@@ -18,7 +18,7 @@ License: **Apache License 2.0**
 
 * Share the app and tell other people about it
 * Tell things that could be improved
-* Submit translations on Crowdin - https://crowdin.com/project/froodyapp
+* Submit translations on Crowdin - https://crowdin.com/project/dorkapp-android
 * Supply artwork or vector icons for the different types of entries
 
 
@@ -31,7 +31,7 @@ License: **Apache License 2.0**
 
 <table>
   <tr>
-    <td> <img src="https://raw.githubusercontent.com/Xpitfire/dork.app-android/master/doc/screenshots/Screenshot_20170215-221342.png?token=AGtkC_MOye1bIbFo-bI3XoTpvvC-OUWpks5Yrf_ZwA%3D%3D" alt="Login view" width="300"/> </td>
+    <td> <img src="doc/screenshots/Screenshot_20170215-221342.png" alt="Login view" width="300"/> </td>
     <td> <img src="" alt="Wild acts view"/> </td>
   </tr><tr>
     <td> <img src="" alt="My acts view"/> </td>
