@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/Xpitfire/dork.app-android.svg?token=sHWssDoyyNFRZYWr8UQ5&branch=master)](https://travis-ci.com/Xpitfire/dork.app-android)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/dorkapp-android/localized.svg)](https://crowdin.com/project/dorkapp-android)
 
-##[Download APK](https://mega.nz/#!2tdzQRoY!XMoLYS2neQAMEgwjBE_BgQsRxov_WkKs5DPEiTVBHps)
+##[Download APK](https://mega.nz/#!ag8h0DLQ!ge8bO68weTwuRAm6Q3SZ8Ad-IfxrP8RZvMtYXONQA5Y)
 
 
 Android part of the reactMe application.  

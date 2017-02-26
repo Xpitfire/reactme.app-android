@@ -14,6 +14,7 @@ android:
     - android-25
 sudo: required
 before_script: 
+  - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
   - chmod +x gradlew
     
 before_cache:
