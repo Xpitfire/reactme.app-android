@@ -24,4 +24,5 @@
   <string name="login_failed">Login failed</string>
   <string name="error_couldnt_connect_or_register">Could not verify or register user!</string>
   <string name="error_couldnt_check_user_id">Error: Could not check user id!</string>
+  <string name="signup_failed">Failed to signup user!</string>
 </resources>
