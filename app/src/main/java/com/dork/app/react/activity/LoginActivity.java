@@ -17,12 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 // swagger api
-import com.dork.app.react.App;
 import com.dork.app.react.R;
-import com.dork.app.react.api.invoker.ApiCallback;
-import com.dork.app.react.api.invoker.ApiException;
-import com.dork.app.react.api.AuthApi;
-import com.dork.app.react.api.model.LoginCredentials;
 import com.dork.app.react.event.LoginMessageEvent;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -44,12 +39,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "reactMe:LoginActivity";
@@ -70,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.link_signup) TextView _signupLink;
     @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
     @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
+
+    private ProgressDialog _progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,74 +146,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void onHandleLogin() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        _progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+        _progressDialog.setIndeterminate(true);
+        _progressDialog.setMessage("Authenticating...");
+        _progressDialog.show();
 
-        //final String email = _emailText.getText().toString();
-        //final String password = _passwordText.getText().toString();
-
-        final String email = "admin@dork.com";
-        final String password = "4f21204dae3bffe3fa8869114d1cedcd";
-
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
         Log.d(TAG, "Handle onHandleCustomLogin request");
-
-        LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials
-        loginCredentials.setUsername(email);
-        loginCredentials.setPasswordHash(password);
-
-        AuthApi apiInstance = new AuthApi();
-
-        try {
-            apiInstance.apiAuthLoginPostAsync(loginCredentials, new ApiCallback<Boolean>() {
-                @Override
-                public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // On complete call onLoginFailed
-                            onLoginFailed();
-                            // onLoginFailed();
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-
-                @Override
-                public void onSuccess(Boolean result, int statusCode, final Map<String, List<String>> responseHeaders) {
-                    Log.d(TAG, "Login success!");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // On complete call onLoginSuccess
-                            onLoginSuccess();
-                            // onLoginFailed();
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-
-                @Override
-                public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                }
-
-                @Override
-                public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                }
-            });
-        } catch (ApiException e) {
-            System.err.println("Exception when calling AuthApi#apiAuthLoginPost");
-            e.printStackTrace();
-            onLoginFailed();
-            return;
-        }
+        customEmailAndPasswordLogin(email, password);
     }
 
     /////////////////////////// FACEBOOK LOGIN
-
     public void configureFacebookApiClient() {
         _facebookApiClient = new LoginButton(getApplicationContext());
         _facebookApiClient.setReadPermissions("email");
@@ -268,7 +209,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     /////////////////////////// GOOGLE PLUS LOGIN
-
     public void configureGoogleApiClient() {
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
         // basic profile are included in DEFAULT_SIGN_IN.
@@ -284,12 +224,52 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
     }
 
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        _auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     private void onHandleGooglePlusLogin() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(_googleApiClient);
         startActivityForResult(signInIntent, REQUEST_GOOGLEPLUS_SIGNIN);
     }
 
     /////////////////////////// ACTIVITY LOGIN LOGIC
+    private void customEmailAndPasswordLogin(String email, String password) {
+        _auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCustomToken:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCustomToken", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        _progressDialog.dismiss();
+                    }
+                });
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -298,21 +278,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                onLoginSuccess();
+                customEmailAndPasswordLogin(data.getStringExtra("email"), data.getStringExtra("password"));
+            } else {
+                Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
             }
         }
         if (requestCode == REQUEST_GOOGLEPLUS_SIGNIN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                String personEmail = acct.getEmail();
-                App.log(getClass(), personEmail);
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                onLoginSuccess();
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
             } else {
                 Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
             }

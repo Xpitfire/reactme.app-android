@@ -23,13 +23,16 @@ import com.dork.app.react.R;
 import com.dork.app.react.fragment.UserFragment;
 import com.dork.app.react.api.model.User;
 import com.dork.app.react.util.AppSettings;
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements UserFragment.OnListFragmentInteractionListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "reactMe:MainActivity";
+
+    private AppSettings _settings;
 
     // Icons source: https://icons8.com
     // <a href="https://icons8.com/web-app/5572/Home">Home icon credits</a>
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter _sectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -57,14 +60,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        _settings = new AppSettings(this);
 
         setSupportActionBar(_toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        _sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        _viewPager.setAdapter(mSectionsPagerAdapter);
+        _viewPager.setAdapter(_sectionsPagerAdapter);
         _tabLayout.setupWithViewPager(_viewPager);
         _fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +82,18 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     }
 
     private void verifyLogin() {
-        AppSettings settings = new AppSettings(this);
-        if (!settings.hasUserId()) {
+        if (!_settings.hasUserId()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
     }
 
+    private void logout() {
+        _settings.resetSettings();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

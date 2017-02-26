@@ -17,69 +17,69 @@ public class AppSettings {
     public static final String SHARED_PREF_APP = "app";
     public static final String DEFAULT_STRING = "<EMPTY_STRING>";
 
-    private final SharedPreferences prefApp;
-    private final Context context;
+    private final SharedPreferences _prefApp;
+    private final Context _context;
 
     /**
      * Constructor
      *
-     * @param context Android context
+     * @param context Android _context
      */
     public AppSettings(Context context) {
-        this.context = context.getApplicationContext();
-        prefApp = this.context.getSharedPreferences(SHARED_PREF_APP, Context.MODE_PRIVATE);
+        this._context = context.getApplicationContext();
+        _prefApp = this._context.getSharedPreferences(SHARED_PREF_APP, Context.MODE_PRIVATE);
     }
 
     private String tr(int stringResourceId) {
-        return context.getString(stringResourceId);
+        return _context.getString(stringResourceId);
     }
 
     @SuppressLint("CommitPrefEdits")
     public void resetSettings() {
-        prefApp.edit().clear().commit();
+        _prefApp.edit().clear().commit();
     }
 
     private void setString(int keyResId, String value) {
-        prefApp.edit().putString(tr(keyResId), value).apply();
+        _prefApp.edit().putString(tr(keyResId), value).apply();
     }
 
     private String getString(int keyResId, String defaultValue) {
-        return prefApp.getString(tr(keyResId), defaultValue);
+        return _prefApp.getString(tr(keyResId), defaultValue);
     }
 
     private void setInt(int keyResId, int value) {
-        prefApp.edit().putInt(tr(keyResId), value).apply();
+        _prefApp.edit().putInt(tr(keyResId), value).apply();
     }
 
     private int getInt(int keyResId, int defaultValue) {
-        return prefApp.getInt(tr(keyResId), defaultValue);
+        return _prefApp.getInt(tr(keyResId), defaultValue);
     }
 
     private void setLong(int keyResId, long value) {
-        prefApp.edit().putLong(tr(keyResId), value).apply();
+        _prefApp.edit().putLong(tr(keyResId), value).apply();
     }
 
     private long getLong(int keyResId, long defaultValue) {
-        return prefApp.getLong(tr(keyResId), defaultValue);
+        return _prefApp.getLong(tr(keyResId), defaultValue);
     }
 
     private void setBool(int keyResId, boolean value) {
-        prefApp.edit().putBoolean(tr(keyResId), value).apply();
+        _prefApp.edit().putBoolean(tr(keyResId), value).apply();
     }
 
     private boolean getBool(int keyResId, boolean defaultValue) {
-        return prefApp.getBoolean(tr(keyResId), defaultValue);
+        return _prefApp.getBoolean(tr(keyResId), defaultValue);
     }
 
     private void setDouble(int keyResId, double value) {
-        prefApp.edit().putLong(tr(keyResId), Double.doubleToRawLongBits(value)).apply();
+        _prefApp.edit().putLong(tr(keyResId), Double.doubleToRawLongBits(value)).apply();
     }
 
     private double getDouble(int keyResId, double defaultValue) {
-        if (!prefApp.contains(tr(keyResId))) {
+        if (!_prefApp.contains(tr(keyResId))) {
             return defaultValue;
         }
-        return Double.longBitsToDouble(prefApp.getLong(tr(keyResId), 0));
+        return Double.longBitsToDouble(_prefApp.getLong(tr(keyResId), 0));
     }
 
     private void setIntList(int keyResId, ArrayList<Integer> values) {
@@ -93,7 +93,7 @@ public class AppSettings {
 
     private ArrayList<Integer> getIntList(int keyResId) {
         ArrayList<Integer> ret = new ArrayList<>();
-        String value = prefApp.getString(tr(keyResId), ARRAY_SEPARATOR);
+        String value = _prefApp.getString(tr(keyResId), ARRAY_SEPARATOR);
         if (value.equals(ARRAY_SEPARATOR)) {
             return ret;
         }
@@ -104,7 +104,7 @@ public class AppSettings {
     }
 
     public String getReactServer() {
-        return getString(R.string.pref_key__react_server, context.getString(R.string.server_default));
+        return getString(R.string.pref_key__react_server, _context.getString(R.string.server_default));
     }
 
     public String getUserId() {

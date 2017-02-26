@@ -3,6 +3,7 @@ package com.dork.app.react.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,12 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dork.app.react.R;
+import com.dork.app.react.event.LoginMessageEvent;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+    private static final String TAG = "reactMe:SignupActivity";
+
+    private FirebaseAuth _auth;
+    private FirebaseAuth.AuthStateListener _authListener;
 
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_address) EditText _addressText;
@@ -28,11 +40,34 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
 
+    private String _name;
+    private String _address;
+    private String _email;
+    private String _mobile;
+    private String _password;
+    private String _reEnterPassword;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
+
+        _auth = FirebaseAuth.getInstance();
+        _authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    onSignupSuccess();
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,43 +103,52 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
-        String email = _emailText.getText().toString();
-        String mobile = _mobileText.getText().toString();
-        String password = _passwordText.getText().toString();
-        String reEnterPassword = _reEnterPasswordText.getText().toString();
+        _name = _nameText.getText().toString();
+        _address = _addressText.getText().toString();
+        _email = _emailText.getText().toString();
+        _mobile = _mobileText.getText().toString();
+        _password = _passwordText.getText().toString();
+        _reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        // TODO: Implement your own signup logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+        createUserWithEmailAndPassword(_email, _password);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        _auth.addAuthStateListener(_authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (_authListener != null) {
+            _auth.removeAuthStateListener(_authListener);
+        }
+    }
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+        Intent data = getIntent();
+        data.putExtra("email", _email);
+        data.putExtra("password", _password);
+        setResult(RESULT_OK, data);
         finish();
     }
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
+        _name = null;
+        _address = null;
+        _email = null;
+        _mobile = null;
+        _password = null;
+        _reEnterPassword = null;
 
         String name = _nameText.getText().toString();
         String address = _addressText.getText().toString();
@@ -135,10 +179,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        // ignore incorrect number
-        _mobileText.setError(mobile);
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 4 || password.length() > 12) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
@@ -153,5 +194,24 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+
+    private void createUserWithEmailAndPassword(String email, String password) {
+        _auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this, R.string.signup_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
