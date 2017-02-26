@@ -56,9 +56,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Android standard libs
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:support-v4:25.2.0'
 
     // Open Street Map & Geo
     compile 'org.osmdroid:osmdroid-android:5.6.3'
@@ -74,11 +74,15 @@ dependencies {
     // authentication libraries
     compile 'com.google.android.gms:play-services:10.2.0'
     compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+	
+	// app firebase
+	compile "com.google.firebase:firebase-invites:10.0.1"
 
 	// Testing-only dependencies
     testCompile 'junit:junit:4.12'
-	androidTestCompile 'com.android.support:support-annotations:25.1.1'
+	androidTestCompile 'com.android.support:support-annotations:25.2.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     // Hamcrest library
@@ -90,8 +94,6 @@ dependencies {
     // UI testing with UI Automator
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
-
-apply plugin: 'com.google.gms.google-services'
 
 final String RAW_DIR = "app/src/main/res/raw"
 final String[] ROOT_TO_RAW_COPYFILES = ["README.md", "LICENSE.md", "CHANGELOG.md", "CONTRIBUTORS.txt"]
@@ -119,3 +121,5 @@ task copyRepoFiles(type: Copy) {
 }
 
 tasks.copyRepoFiles.execute()
+
+apply plugin: 'com.google.gms.google-services'

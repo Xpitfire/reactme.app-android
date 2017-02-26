@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "560380184988",
-    "project_id": "reactme-159021"
+    "firebase_url": "https://reactme-159021.firebaseio.com",
+    "project_id": "reactme-159021",
+    "storage_bucket": "reactme-159021.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "560380184988-a79t33naotlh2lhprbodcivf2h29btek.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "560380184988-d82soavaepccve0i6mspp3voll0320od.apps.googleusercontent.com",
           "client_type": 3
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560380184988-a79t33naotlh2lhprbodcivf2h29btek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

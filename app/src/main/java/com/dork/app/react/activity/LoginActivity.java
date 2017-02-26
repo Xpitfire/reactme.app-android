@@ -1,8 +1,6 @@
 package com.dork.app.react.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,16 +22,12 @@ import com.dork.app.react.R;
 import com.dork.app.react.api.invoker.ApiCallback;
 import com.dork.app.react.api.invoker.ApiException;
 import com.dork.app.react.api.AuthApi;
-import com.dork.app.react.api.invoker.Configuration;
-import com.dork.app.react.api.invoker.Pair;
-import com.dork.app.react.api.invoker.auth.Authentication;
 import com.dork.app.react.api.model.LoginCredentials;
 import com.dork.app.react.event.LoginMessageEvent;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -43,7 +37,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -52,10 +52,16 @@ import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "reactMe:LoginActivity";
+
+    // Authentication: Firebase, Facebook and Google Plus
+    private FirebaseAuth.AuthStateListener _authListener;
+    private FirebaseAuth _auth;
+    private CallbackManager _callbackManager;
+    private GoogleApiClient _googleApiClient;
+
     private static final int REQUEST_SIGNUP = 0;
     private static final int REQUEST_GOOGLEPLUS_SIGNIN = 1;
-    private static final int REQUEST_FACEBOOK_SIGNIN = 2;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -64,19 +70,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
     @BindView(R.id.loginFacebookButton) LoginButton _loginFacebookButton;
 
-    private CallbackManager _callbackManager;
-    private GoogleApiClient _googleApiClient;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        _auth = FirebaseAuth.getInstance();
+        _authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    onLoginSuccess();
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                onHandleCustomLogin();
             }
         });
         _loginFacebookButton.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +122,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         configureGoogleApiClient();
     }
 
-    public void login() {
-        Log.d(TAG, "Validate login request");
+    @Override
+    public void onStart() {
+        super.onStart();
+        _auth.addAuthStateListener(_authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (_authListener != null) {
+            _auth.removeAuthStateListener(_authListener);
+        }
+    }
+
+    public void onHandleCustomLogin() {
+        Log.d(TAG, "Validate onHandleCustomLogin request");
 
         if (!validate()) {
             onLoginFailed();
@@ -130,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         final String email = "admin@dork.com";
         final String password = "4f21204dae3bffe3fa8869114d1cedcd";
 
-        Log.d(TAG, "Handle login request");
+        Log.d(TAG, "Handle onHandleCustomLogin request");
 
         LoginCredentials loginCredentials = new LoginCredentials(); // LoginCredentials
         loginCredentials.setUsername(email);
@@ -192,9 +224,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         _loginFacebookButton.registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                onLoginSuccess();
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
             @Override
@@ -207,6 +238,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 onLoginFailed();
             }
         });
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        _auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     public void onHandleFacebookLogin() {
