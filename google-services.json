@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "560380184988",
+    "project_id": "reactme-159021"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560380184988:android:c02aadc9c3baa423",
+        "android_client_info": {
+          "package_name": "com.dork.app.react"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560380184988-d82soavaepccve0i6mspp3voll0320od.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "560380184988-pktupdphcu13p4t0mu90o9vq61vne20b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dork.app.react",
+            "certificate_hash": "558e86910e507dcebd8aa1419ce02dd930e9677f"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRJ7GMTjDu6aXa7UjGuMH46cY07n1R3J0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
