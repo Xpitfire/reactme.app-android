@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // Authentication: Firebase, Facebook and Google Plus
     private FirebaseAuth.AuthStateListener _authListener;
     private FirebaseAuth _auth;
+    private LoginButton _facebookApiClient;
     private CallbackManager _callbackManager;
     private GoogleApiClient _googleApiClient;
 
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
     @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
-    @BindView(R.id.loginFacebookButton) LoginButton _loginFacebookButton;
+    @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -218,10 +219,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     /////////////////////////// FACEBOOK LOGIN
 
     public void configureFacebookApiClient() {
-        _loginFacebookButton.setReadPermissions("email");
+        _facebookApiClient = new LoginButton(getApplicationContext());
+        _facebookApiClient.setReadPermissions("email");
         _callbackManager = CallbackManager.Factory.create();
         // Callback registration
-        _loginFacebookButton.registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
+        _facebookApiClient.registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);

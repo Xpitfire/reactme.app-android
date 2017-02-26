@@ -35,7 +35,7 @@
     </style>
 
     <style name="FacebookLoginButton">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:background">@drawable/facebook</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
