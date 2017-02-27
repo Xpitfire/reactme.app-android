@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.dork.app.react.R;
 import com.dork.app.react.adapter.UserRecyclerViewAdapter;
-import com.dork.app.react.cookie.model.User;
+import com.dork.app.react.api.model.User;
 import com.dork.app.react.event.LoginMessageEvent;
 import com.dork.app.react.service.moc.MocService;
 

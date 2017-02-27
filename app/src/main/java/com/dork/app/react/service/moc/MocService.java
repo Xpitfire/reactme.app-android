@@ -1,7 +1,7 @@
 package com.dork.app.react.service.moc;
 
-import com.dork.app.react.cookie.model.ActMessage;
-import com.dork.app.react.cookie.model.User;
+import com.dork.app.react.api.model.ActMessage;
+import com.dork.app.react.api.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

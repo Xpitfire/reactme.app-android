@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dork.app.react.cookie.PersistentCookieStore;
-import com.dork.app.react.cookie.invoker.Configuration;
+import com.dork.app.react.api.invoker.Configuration;
 import com.dork.app.react.util.AppSettings;
 
 import java.net.CookieHandler;

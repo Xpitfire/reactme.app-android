@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dork.app.react.R;
-import com.dork.app.react.cookie.model.ActMessage;
+import com.dork.app.react.api.model.ActMessage;
 import com.dork.app.react.fragment.WildActsFragment;
 
 import java.util.List;
