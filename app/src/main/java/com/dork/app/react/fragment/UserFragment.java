@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.dork.app.react.R;
 import com.dork.app.react.api.model.User;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.dork.app.react.service.moc.UserMoc;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,11 +31,10 @@ import butterknife.ButterKnife;
  */
 public class UserFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+
+    private int _columnCount = 1;
+    private OnListFragmentInteractionListener _listener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,7 +43,6 @@ public class UserFragment extends Fragment {
     public UserFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static UserFragment newInstance(int columnCount) {
         UserFragment fragment = new UserFragment();
@@ -58,7 +57,7 @@ public class UserFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            _columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -72,26 +71,24 @@ public class UserFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             final RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
+            if (_columnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, _columnCount));
             }
             recyclerView.setAdapter(
                     new UserRecyclerViewAdapter(
                             new ArrayList<User>(),
-                            mListener));
+                            _listener));
         }
-
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+            _listener = (OnListFragmentInteractionListener) context;
             EventBus.getDefault().register(this);
         } else {
             throw new RuntimeException("Activity containing this fragment must implement OnListFragmentInteractionListener!");
@@ -101,87 +98,18 @@ public class UserFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        _listener = null;
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginMessageEvent(LoginMessageEvent event) {
         final RecyclerView recyclerView = (RecyclerView) getView();
-        /*
-        InitApi api = new InitApi();
-        try {
-            api.apiInitUserGetAsync(new ApiCallback<List<User>>() {
-                @Override
-                public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                    Log.d("Dork-Fragment", "InitApi get failed!");
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setAdapter(
-                                    new UserRecyclerViewAdapter(
-                                            new ArrayList<User>(),
-                                            mListener));
-                        }
-                    });
-                }
-
-                @Override
-                public void onSuccess(List<User> result, int statusCode, Map<String, List<String>> responseHeaders) {
-                    Log.d("Dork-Fragment", "InitApi get worked!");
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ArrayList<User> users = new ArrayList<>();
-                            User user;
-
-                            user = new User();
-                            user.email("test@test.com");
-                            user.username("test");
-                            users.add(user);
-                            user = new User();
-                            user.email("dork@dork.com");
-                            user.username("dork");
-                            users.add(user);
-
-                            recyclerView.setAdapter(
-                                    new UserRecyclerViewAdapter(
-                                            users,
-                                            mListener));
-                        }
-                    });
-                }
-
-                @Override
-                public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-
-                }
-
-                @Override
-                public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-
-                }
-            });
-        } catch (ApiException e) {
-            e.printStackTrace();
-        }
-        */
-        ArrayList<User> users = new ArrayList<>();
-        User user;
-
-        user = new User();
-        user.email("test@test.com");
-        user.username("test");
-        users.add(user);
-        user = new User();
-        user.email("dork@dork.com");
-        user.username("dork");
-        users.add(user);
 
         recyclerView.setAdapter(
                 new UserRecyclerViewAdapter(
-                        users,
-                        mListener));
+                        UserMoc.USERS,
+                        _listener));
     }
 
     /**

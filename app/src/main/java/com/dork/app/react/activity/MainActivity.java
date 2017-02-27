@@ -13,17 +13,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.dork.app.react.R;
+import com.dork.app.react.fragment.MyActsFragment;
 import com.dork.app.react.fragment.UserFragment;
 import com.dork.app.react.api.model.User;
+import com.dork.app.react.fragment.WildActsFragment;
 import com.dork.app.react.util.AppSettings;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.apache.commons.lang3.NotImplementedException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,38 +122,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     @Override
     public void onListFragmentInteraction(User user) {
         Log.i(TAG, user.getUsername());
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ButterKnife.bind(this, rootView);
-            return rootView;
-        }
+        Intent intent = new Intent(this, ChatDetailActivity.class);
+        intent.putExtra("username", user.getUsername());
+        intent.putExtra("email", user.getEmail());
+        intent.putExtra("id", user.getId());
+        startActivity(intent);
     }
 
     /**
@@ -169,9 +144,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            if (position == 0) return UserFragment.newInstance(position + 1);
+            if (position == 0) return new WildActsFragment();
+            if (position == 1) return UserFragment.newInstance(1);
+            if (position == 2) return new MyActsFragment();
 
-            return PlaceholderFragment.newInstance(position + 1);
+            throw new NotImplementedException("Unknown tab position!");
         }
 
         @Override
@@ -184,11 +161,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Act Wild";
+                    return getString(R.string.act_wild);
                 case 1:
-                    return "Friends";
+                    return getString(R.string.friends);
                 case 2:
-                    return "My Acts";
+                    return getString(R.string.my_acts);
             }
             return null;
         }
