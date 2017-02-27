@@ -11,9 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dork.app.react.R;
-import com.dork.app.react.api.model.User;
+import com.dork.app.react.adapter.UserRecyclerViewAdapter;
+import com.dork.app.react.cookie.model.User;
 import com.dork.app.react.event.LoginMessageEvent;
-import com.dork.app.react.service.moc.UserMoc;
+import com.dork.app.react.service.moc.MocService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -102,16 +103,6 @@ public class UserFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginMessageEvent(LoginMessageEvent event) {
-        final RecyclerView recyclerView = (RecyclerView) getView();
-
-        recyclerView.setAdapter(
-                new UserRecyclerViewAdapter(
-                        UserMoc.USERS,
-                        _listener));
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -124,5 +115,15 @@ public class UserFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(User user);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginMessageEvent(LoginMessageEvent event) {
+        final RecyclerView recyclerView = (RecyclerView) getView();
+
+        recyclerView.setAdapter(
+                new UserRecyclerViewAdapter(
+                        MocService.USERS,
+                        _listener));
     }
 }

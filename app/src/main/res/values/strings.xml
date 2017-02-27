@@ -3,7 +3,7 @@
     <string name="facebook_app_id" translatable="false">1136919013097854</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1136919013097854</string>
 
-    <string name="app_name">react</string>
+    <string name="app_name">reactMe</string>
     <string name="action_settings">Settings</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

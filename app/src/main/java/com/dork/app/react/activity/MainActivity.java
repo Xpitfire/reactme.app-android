@@ -18,9 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.dork.app.react.R;
+import com.dork.app.react.cookie.model.ActMessage;
 import com.dork.app.react.fragment.MyActsFragment;
 import com.dork.app.react.fragment.UserFragment;
-import com.dork.app.react.api.model.User;
+import com.dork.app.react.cookie.model.User;
 import com.dork.app.react.fragment.WildActsFragment;
 import com.dork.app.react.util.AppSettings;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +31,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements UserFragment.OnListFragmentInteractionListener, WildActsFragment.OnListFragmentInteractionListener {
 
     private static final String TAG = "reactMe:MainActivity";
 
@@ -127,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         intent.putExtra("email", user.getEmail());
         intent.putExtra("id", user.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onListFragmentInteraction(ActMessage message) {
+        Log.i(TAG, message.getDescription());
     }
 
     /**
