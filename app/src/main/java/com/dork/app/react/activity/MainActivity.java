@@ -3,7 +3,6 @@ package com.dork.app.react.activity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -83,14 +82,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
             }
         });
 
-        verifyLogin();
-    }
-
-    private void verifyLogin() {
-        if (!_settings.hasUserId()) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
     }
 
     private void logout() {

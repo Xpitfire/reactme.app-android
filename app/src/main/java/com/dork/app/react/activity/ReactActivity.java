@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 
 import com.dork.app.react.R;
 import com.dork.app.react.util.CameraPreview;
-import com.dork.app.react.util.CameraUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,17 +20,6 @@ import butterknife.ButterKnife;
  * status bar and navigation/system bar) with user interaction.
  */
 public class ReactActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -61,7 +49,6 @@ public class ReactActivity extends AppCompatActivity {
 
     private View _controlsView;
 
-    private Camera _camera;
     private CameraPreview _cameraPreview;
 
     private final Runnable _showPart2Runnable = new Runnable() {
@@ -95,11 +82,8 @@ public class ReactActivity extends AppCompatActivity {
         _controlsView = findViewById(R.id.fullscreen_content_controls);
         _contentView = findViewById(R.id.fullscreen_content);
 
-        // Create an instance of Camera
-        _camera = CameraUtils.getCameraInstance();
-
         // Create our Preview view and set it as the content of our activity.
-        _cameraPreview = new CameraPreview(this, _camera);
+        _cameraPreview = new CameraPreview(this);
 
         // Set up the user interaction to manually show or hide the system UI.
         _contentView.setOnClickListener(new View.OnClickListener() {
@@ -168,13 +152,7 @@ public class ReactActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        releaseCamera();              // release the camera immediately on pause event
+        _cameraPreview.releaseCamera();
     }
 
-    private void releaseCamera(){
-        if (_camera != null){
-            _camera.release();        // release the camera for other applications
-            _camera = null;
-        }
-    }
 }

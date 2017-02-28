@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
     tools:context="com.dork.app.react.activity.ReactActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -23,9 +22,11 @@
          android:fitsSystemWindows. -->
     <FrameLayout
         android:id="@+id/camera_preview"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
+
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
@@ -35,8 +36,8 @@
             android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
-
         </LinearLayout>
+
     </FrameLayout>
 
 </FrameLayout>
