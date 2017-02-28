@@ -1,7 +1,6 @@
 package com.dork.app.react.activity;
 
 import android.annotation.SuppressLint;
-import android.hardware.Camera;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +27,8 @@ public class ReactActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
 
     private final Handler _hideHandler = new Handler();
+    private final Handler _recordingHandler = new Handler();
+
     private View _contentView;
     private final Runnable _hidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -70,6 +71,23 @@ public class ReactActivity extends AppCompatActivity {
         }
     };
 
+    private final Runnable _startRecordingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //_cameraPreview.startRecording();
+        }
+    };
+
+    private final Runnable _stopRecordingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //_cameraPreview.stopRecording();
+            finish();
+        }
+    };
+
+
+
     @BindView(R.id.camera_preview) FrameLayout _frameLayout;
 
     @Override
@@ -103,7 +121,17 @@ public class ReactActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+        delayedHide(200);
+
+        delayedRecordingStart(100);
+        delayedRecordingStop(6000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _cameraPreview.releaseMediaRecorder();
+        _cameraPreview.releaseCamera();
     }
 
     private void toggle() {
@@ -149,10 +177,14 @@ public class ReactActivity extends AppCompatActivity {
         _hideHandler.postDelayed(_hideRunnable, delayMillis);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        _cameraPreview.releaseCamera();
+    private void delayedRecordingStop(int delayMillis) {
+        _recordingHandler.removeCallbacks(_stopRecordingRunnable);
+        _recordingHandler.postDelayed(_stopRecordingRunnable, delayMillis);
+    }
+
+    private void delayedRecordingStart(int delayMillis) {
+        _recordingHandler.removeCallbacks(_startRecordingRunnable, delayMillis);
+        _recordingHandler.postDelayed(_startRecordingRunnable, delayMillis);
     }
 
 }

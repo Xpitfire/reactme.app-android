@@ -8,18 +8,31 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** A basic Camera preview class */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+
     private static final String TAG = "reactMe:CameraPreview";
 
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+
+    private MediaRecorder _mediaRecorder;
     private SurfaceHolder _holder;
     private Camera _camera;
     private Context _context;
@@ -118,8 +131,91 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+    public void releaseMediaRecorder() {
+        if (_mediaRecorder != null) {
+            _mediaRecorder.reset();   // clear recorder configuration
+            _mediaRecorder.release(); // release the recorder object
+            _mediaRecorder = null;
+            _camera.lock();           // lock camera for later use
+        }
+    }
+
+    public void releaseCamera() {
+        if (_camera != null){
+            _camera.release();        // release the camera for other applications
+            _camera = null;
+        }
+    }
+
+    public void startRecording() {
+        _mediaRecorder = new MediaRecorder();
+        // Step 1: Unlock and set camera to MediaRecorder
+        _camera.unlock();
+        _mediaRecorder.setCamera(_camera);
+
+        // Step 2: Set sources
+        _mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        _mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        _mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+
+        // Step 4: Set output file
+        _mediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
+
+        // Step 5: Set the preview output
+        _mediaRecorder.setPreviewDisplay(this.getHolder().getSurface());
+
+        try {
+            _mediaRecorder.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        _mediaRecorder.start();
+    }
+
+    public void stopRecording() {
+        _mediaRecorder.stop();
+        releaseMediaRecorder();
+        _camera.lock();
+    }
+
+    /** Create a File for saving an image or video */
+    private static File getOutputMediaFile(int type){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".jpg");
+        } else if(type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "VID_"+ timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
     /** Check if this device has a camera */
-    private boolean checkCameraHardware(Context context) {
+    private static boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
             return true;
@@ -129,22 +225,28 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    public void releaseCamera(){
-        if (_camera != null){
-            _camera.release();        // release the camera for other applications
-            _camera = null;
-        }
-    }
-
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance(){
-        Camera c = null;
+        Camera camera = null;
         try {
-            c = Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
+            int cameraCount = 0;
+            Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+            cameraCount = Camera.getNumberOfCameras();
+            for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+                Camera.getCameraInfo(camIdx, cameraInfo);
+                if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                    try {
+                        camera = Camera.open(camIdx);
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Camera failed to open: " + e.getLocalizedMessage());
+                    }
+                }
+            }
+        } catch (Exception e){
             // Camera is not available (in use or does not exist)
+            Log.d(TAG, "No camera available");
         }
-        return c; // returns null if camera is unavailable
+        return camera; // returns null if camera is unavailable
     }
+
 }
