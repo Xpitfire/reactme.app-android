@@ -76,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         _fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), ReactActivity.class);
+                startActivity(intent);
             }
         });
 
