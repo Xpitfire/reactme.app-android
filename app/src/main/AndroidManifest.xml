@@ -64,24 +64,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/pref_key__fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/pref_key__facebook_app_id" />
 
         <activity
             android:name=".activity.ChatDetailActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_chat_detail"
+            android:label="@string/activity_chat_detail__title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ReactActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_react"
+            android:label="@string/activity_react__title"
             android:theme="@style/FullscreenTheme">
         </activity>
     </application>

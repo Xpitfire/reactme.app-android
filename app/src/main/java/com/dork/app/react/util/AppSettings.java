@@ -104,7 +104,7 @@ public class AppSettings {
     }
 
     public String getReactServer() {
-        return getString(R.string.pref_key__react_server, mContext.getString(R.string.server_default));
+        return getString(R.string.pref_key__react_server, mContext.getString(R.string.pref_key__server_default));
     }
 
     public String getUserId() {

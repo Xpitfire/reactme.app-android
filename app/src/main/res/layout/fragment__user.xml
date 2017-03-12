@@ -11,7 +11,7 @@
         android:minHeight="72dp">
 
         <ImageView
-            android:id="@+id/avatar_imageview"
+            android:id="@+id/adapter_user__image_view__avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
@@ -22,15 +22,15 @@
             android:src="@drawable/smily_face"/>
 
         <LinearLayout
-            android:id="@+id/textview_container"
+            android:id="@+id/adapter_user__linear_layout__container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/icon_imageview"
-            android:layout_toRightOf="@+id/avatar_imageview"
+            android:layout_toLeftOf="@+id/adapter_user__image_view__icon"
+            android:layout_toRightOf="@+id/adapter_user__image_view__avatar"
             android:orientation="vertical"
             android:paddingBottom="16dp"
             android:paddingTop="16dp">
@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/icon_imageview"
+            android:id="@+id/adapter_user__image_view__icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

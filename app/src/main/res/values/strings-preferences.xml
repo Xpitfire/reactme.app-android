@@ -2,4 +2,9 @@
 <resources>
     <string name="pref_key__react_server" translatable="false">pref_key__react_server</string>
     <string name="pref_key__user_id" translatable="false">pref_key__user_id</string>
+
+    <string name="pref_key__server_client_id" translatable="false">560380184988-d82soavaepccve0i6mspp3voll0320od.apps.googleusercontent.com</string>
+    <string name="pref_key__facebook_app_id" translatable="false">1136919013097854</string>
+    <string name="pref_key__fb_login_protocol_scheme" translatable="false">fb1136919013097854</string>
+    <string name="pref_key__server_default">http://dork-943e.azurewebsites.net</string>
 </resources>
