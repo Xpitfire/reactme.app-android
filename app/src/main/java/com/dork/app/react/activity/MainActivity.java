@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         Log.i(TAG, user.getUsername());
         Intent intent = new Intent(this, ChatDetailActivity.class);
         intent.putExtra("username", user.getUsername());
-        intent.putExtra("email", user.getEmail());
+        intent.putExtra("status", user.getStatus().name());
         intent.putExtra("id", user.getId());
         startActivity(intent);
     }

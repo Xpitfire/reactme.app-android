@@ -4,13 +4,13 @@ package com.dork.app.react.model;
  * Created by Xpitfire on 12.03.2017.
  */
 
-public class User extends EntityBase {
+public final class User extends EntityBase {
 
     private String username;
     private String email;
-    private String passwordHash;
-    private String profileId;
-    private UserStatus status;
+    private String credentialsId;
+    private Profile profile;
+    private UserStatus status = UserStatus.INACTIVE;
 
     public String getUsername() {
         return username;
@@ -28,20 +28,20 @@ public class User extends EntityBase {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getCredentialsId() {
+        return credentialsId;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setCredentialsId(String credentialsId) {
+        this.credentialsId = credentialsId;
     }
 
-    public String getProfileId() {
-        return profileId;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setProfileId(String profileId) {
-        this.profileId = profileId;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public UserStatus getStatus() {
