@@ -34,15 +34,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
 
     private static final String TAG = "reactMe:MainActivity";
 
-    private AppSettings _settings;
+    private AppSettings mSettings;
 
     // Icons source: https://icons8.com
     // <a href="https://icons8.com/web-app/5572/Home">Home icon credits</a>
 
-    @BindView(R.id.container) ViewPager _viewPager;
-    @BindView(R.id.toolbar) Toolbar _toolbar;
-    @BindView(R.id.tabs) TabLayout _tabLayout;
-    @BindView(R.id.fab) FloatingActionButton _fab;
+    @BindView(R.id.container) ViewPager mViewPager;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.tabs) TabLayout mTabLayout;
+    @BindView(R.id.fab) FloatingActionButton mFab;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter _sectionsPagerAdapter;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -62,17 +62,17 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        _settings = new AppSettings(this);
+        mSettings = new AppSettings(this);
 
-        setSupportActionBar(_toolbar);
+        setSupportActionBar(mToolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        _sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        _viewPager.setAdapter(_sectionsPagerAdapter);
-        _tabLayout.setupWithViewPager(_viewPager);
-        _fab.setOnClickListener(new View.OnClickListener() {
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     }
 
     private void logout() {
-        _settings.resetSettings();
+        mSettings.resetSettings();
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

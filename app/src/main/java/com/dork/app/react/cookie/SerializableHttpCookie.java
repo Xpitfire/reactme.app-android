@@ -9,47 +9,47 @@ import java.net.HttpCookie;
 public class SerializableHttpCookie implements Serializable {
     private static final long serialVersionUID = 6374381323722046732L;
 
-    private transient final HttpCookie _cookie;
-    private transient HttpCookie _clientCookie;
+    private transient final HttpCookie mCookie;
+    private transient HttpCookie mClientCookie;
 
     public SerializableHttpCookie(HttpCookie cookie) {
-        this._cookie = cookie;
+        this.mCookie = cookie;
     }
 
     public HttpCookie getCookie() {
-        HttpCookie bestCookie = _cookie;
-        if (_clientCookie != null) {
-            bestCookie = _clientCookie;
+        HttpCookie bestCookie = mCookie;
+        if (mClientCookie != null) {
+            bestCookie = mClientCookie;
         }
         return bestCookie;
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeObject(_cookie.getName());
-        out.writeObject(_cookie.getValue());
-        out.writeObject(_cookie.getComment());
-        out.writeObject(_cookie.getCommentURL());
-        out.writeObject(_cookie.getDomain());
-        out.writeLong(_cookie.getMaxAge());
-        out.writeObject(_cookie.getPath());
-        out.writeObject(_cookie.getPortlist());
-        out.writeInt(_cookie.getVersion());
-        out.writeBoolean(_cookie.getSecure());
-        out.writeBoolean(_cookie.getDiscard());
+        out.writeObject(mCookie.getName());
+        out.writeObject(mCookie.getValue());
+        out.writeObject(mCookie.getComment());
+        out.writeObject(mCookie.getCommentURL());
+        out.writeObject(mCookie.getDomain());
+        out.writeLong(mCookie.getMaxAge());
+        out.writeObject(mCookie.getPath());
+        out.writeObject(mCookie.getPortlist());
+        out.writeInt(mCookie.getVersion());
+        out.writeBoolean(mCookie.getSecure());
+        out.writeBoolean(mCookie.getDiscard());
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         String name = (String) in.readObject();
         String value = (String) in.readObject();
-        _clientCookie = new HttpCookie(name, value);
-        _clientCookie.setComment((String) in.readObject());
-        _clientCookie.setCommentURL((String) in.readObject());
-        _clientCookie.setDomain((String) in.readObject());
-        _clientCookie.setMaxAge(in.readLong());
-        _clientCookie.setPath((String) in.readObject());
-        _clientCookie.setPortlist((String) in.readObject());
-        _clientCookie.setVersion(in.readInt());
-        _clientCookie.setSecure(in.readBoolean());
-        _clientCookie.setDiscard(in.readBoolean());
+        mClientCookie = new HttpCookie(name, value);
+        mClientCookie.setComment((String) in.readObject());
+        mClientCookie.setCommentURL((String) in.readObject());
+        mClientCookie.setDomain((String) in.readObject());
+        mClientCookie.setMaxAge(in.readLong());
+        mClientCookie.setPath((String) in.readObject());
+        mClientCookie.setPortlist((String) in.readObject());
+        mClientCookie.setVersion(in.readInt());
+        mClientCookie.setSecure(in.readBoolean());
+        mClientCookie.setDiscard(in.readBoolean());
     }
 }

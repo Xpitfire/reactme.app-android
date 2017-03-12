@@ -21,13 +21,13 @@ import butterknife.ButterKnife;
  */
 public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRecyclerViewAdapter.ViewHolder> {
 
-    private List<ActMessage> _values;
-    private final WildActsFragment.OnListFragmentInteractionListener _listener;
+    private List<ActMessage> mValues;
+    private final WildActsFragment.OnListFragmentInteractionListener mListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public WildActsRecyclerViewAdapter(List<ActMessage> messages, WildActsFragment.OnListFragmentInteractionListener listener) {
-        _values = messages;
-        _listener = listener;
+        mValues = messages;
+        mListener = listener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -44,14 +44,14 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder._actMessage = _values.get(position);
+        holder.mActMessage = mValues.get(position);
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder._idView.setText(_values.get(position).getDescription());
-        holder._cardView.setOnClickListener(new View.OnClickListener() {
+        holder.mIdView.setText(mValues.get(position).getDescription());
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _listener.onListFragmentInteraction(holder._actMessage);
+                mListener.onListFragmentInteraction(holder.mActMessage);
             }
         });
     }
@@ -59,7 +59,7 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return _values.size();
+        return mValues.size();
     }
 
     // Provide a reference to the views for each data item
@@ -67,13 +67,13 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public CardView _cardView;
-        @BindView(R.id.info_text) public TextView _idView;
-        public ActMessage _actMessage;
+        public CardView mCardView;
+        @BindView(R.id.info_text) public TextView mIdView;
+        public ActMessage mActMessage;
 
         public ViewHolder(CardView c) {
             super(c);
-            _cardView = c;
+            mCardView = c;
             ButterKnife.bind(this, c);
         }
     }

@@ -32,8 +32,8 @@ public class WildActsFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    private int _columnCount = 1;
-    private OnListFragmentInteractionListener _listener;
+    private int mColumnCount = 1;
+    private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -56,7 +56,7 @@ public class WildActsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            _columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -70,15 +70,15 @@ public class WildActsFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             final RecyclerView recyclerView = (RecyclerView) view;
-            if (_columnCount <= 1) {
+            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, _columnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(
                     new WildActsRecyclerViewAdapter(
                             new ArrayList<ActMessage>(),
-                            _listener));
+                            mListener));
         }
         return view;
     }
@@ -87,7 +87,7 @@ public class WildActsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
-            _listener = (OnListFragmentInteractionListener) context;
+            mListener = (OnListFragmentInteractionListener) context;
             EventBus.getDefault().register(this);
         } else {
             throw new RuntimeException("Activity containing this fragment must implement OnListFragmentInteractionListener!");
@@ -97,7 +97,7 @@ public class WildActsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        _listener = null;
+        mListener = null;
         EventBus.getDefault().unregister(this);
     }
 
@@ -112,6 +112,6 @@ public class WildActsFragment extends Fragment {
         recyclerView.setAdapter(
                 new WildActsRecyclerViewAdapter(
                         MocService.ACT_MESSAGES,
-                        _listener));
+                        mListener));
     }
 }

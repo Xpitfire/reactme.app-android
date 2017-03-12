@@ -10,9 +10,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -32,30 +30,30 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
 
-    private MediaRecorder _mediaRecorder;
-    private SurfaceHolder _holder;
-    private Camera _camera;
-    private Context _context;
+    private MediaRecorder mMediaRecorder;
+    private SurfaceHolder mHolder;
+    private Camera mCamera;
+    private Context mContext;
 
     public CameraPreview(Context context) {
         super(context);
-        _context = context;
-        _camera = getCameraInstance();
+        mContext = context;
+        mCamera = getCameraInstance();
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
-        _holder = getHolder();
-        _holder.addCallback(this);
+        mHolder = getHolder();
+        mHolder.addCallback(this);
         // deprecated setting, but required on Android versions prior to 3.0
-        _holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, now tell the camera where to draw the preview.
         try {
-            setCameraDisplayOrientation(1, this._camera);
-            _camera.setPreviewDisplay(holder);
-            _camera.startPreview();
+            setCameraDisplayOrientation(1, this.mCamera);
+            mCamera.setPreviewDisplay(holder);
+            mCamera.startPreview();
         } catch (IOException e) {
             Log.d(TAG, "Error setting camera preview: " + e.getMessage());
         }
@@ -69,14 +67,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // If your preview can change or rotate, take care of those events here.
         // Make sure to stop the preview before resizing or reformatting it.
 
-        if (_holder.getSurface() == null){
+        if (mHolder.getSurface() == null){
             // preview surface does not exist
             return;
         }
 
         // stop preview before making changes
         try {
-            _camera.stopPreview();
+            mCamera.stopPreview();
         } catch (Exception e){
             // ignore: tried to stop a non-existent preview
         }
@@ -86,8 +84,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         // start preview with new settings
         try {
-            _camera.setPreviewDisplay(_holder);
-            _camera.startPreview();
+            mCamera.setPreviewDisplay(mHolder);
+            mCamera.startPreview();
 
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
@@ -103,7 +101,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
      */
     @SuppressLint("NewApi")
     public void setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera) {
-        int rotation = ((WindowManager)_context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+        int rotation = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
                 .getRotation();
         int degrees = 0;
         switch (rotation) {
@@ -132,52 +130,52 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void releaseMediaRecorder() {
-        if (_mediaRecorder != null) {
-            _mediaRecorder.reset();   // clear recorder configuration
-            _mediaRecorder.release(); // release the recorder object
-            _mediaRecorder = null;
-            _camera.lock();           // lock camera for later use
+        if (mMediaRecorder != null) {
+            mMediaRecorder.reset();   // clear recorder configuration
+            mMediaRecorder.release(); // release the recorder object
+            mMediaRecorder = null;
+            mCamera.lock();           // lock camera for later use
         }
     }
 
     public void releaseCamera() {
-        if (_camera != null){
-            _camera.release();        // release the camera for other applications
-            _camera = null;
+        if (mCamera != null){
+            mCamera.release();        // release the camera for other applications
+            mCamera = null;
         }
     }
 
     public void startRecording() {
-        _mediaRecorder = new MediaRecorder();
+        mMediaRecorder = new MediaRecorder();
         // Step 1: Unlock and set camera to MediaRecorder
-        _camera.unlock();
-        _mediaRecorder.setCamera(_camera);
+        mCamera.unlock();
+        mMediaRecorder.setCamera(mCamera);
 
         // Step 2: Set sources
-        _mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-        _mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-        _mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
 
         // Step 4: Set output file
-        _mediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
+        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
 
         // Step 5: Set the preview output
-        _mediaRecorder.setPreviewDisplay(this.getHolder().getSurface());
+        mMediaRecorder.setPreviewDisplay(this.getHolder().getSurface());
 
         try {
-            _mediaRecorder.prepare();
+            mMediaRecorder.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        _mediaRecorder.start();
+        mMediaRecorder.start();
     }
 
     public void stopRecording() {
-        _mediaRecorder.stop();
+        mMediaRecorder.stop();
         releaseMediaRecorder();
-        _camera.lock();
+        mCamera.lock();
     }
 
     /** Create a File for saving an image or video */

@@ -33,7 +33,7 @@ public class App extends MultiDexApplication {
         }
     }
 
-    private AppSettings _appSettings;
+    private AppSettings mAppSettings;
 
     @Override
     public void onCreate() {
@@ -41,8 +41,8 @@ public class App extends MultiDexApplication {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        _appSettings = new AppSettings(this);
-        String server = _appSettings.getReactServer();
+        mAppSettings = new AppSettings(this);
+        String server = mAppSettings.getReactServer();
         Configuration.getDefaultApiClient().setBasePath(server);
 
         // enable cookies

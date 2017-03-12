@@ -13,14 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dork.app.react.R;
-import com.dork.app.react.event.LoginMessageEvent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,24 +25,24 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "reactMe:SignupActivity";
 
-    private FirebaseAuth _auth;
-    private FirebaseAuth.AuthStateListener _authListener;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @BindView(R.id.input_name) EditText _nameText;
-    @BindView(R.id.input_address) EditText _addressText;
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_mobile) EditText _mobileText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
-    @BindView(R.id.btn_signup) Button _signupButton;
-    @BindView(R.id.link_login) TextView _loginLink;
+    @BindView(R.id.input_name) EditText mNameText;
+    @BindView(R.id.input_address) EditText mAddressText;
+    @BindView(R.id.input_email) EditText mEmailText;
+    @BindView(R.id.input_mobile) EditText mMobileText;
+    @BindView(R.id.input_password) EditText mPasswordText;
+    @BindView(R.id.input_reEnterPassword) EditText mReEnterPasswordText;
+    @BindView(R.id.btn_signup) Button mSignupButton;
+    @BindView(R.id.link_login) TextView mLoginLink;
 
-    private String _name;
-    private String _address;
-    private String _email;
-    private String _mobile;
-    private String _password;
-    private String _reEnterPassword;
+    private String mName;
+    private String mAddress;
+    private String mEmail;
+    private String mMobile;
+    private String mPassword;
+    private String mReEnterPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +50,8 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
-        _auth = FirebaseAuth.getInstance();
-        _authListener = new FirebaseAuth.AuthStateListener() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -69,13 +66,13 @@ public class SignupActivity extends AppCompatActivity {
             }
         };
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        mSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
-        _loginLink.setOnClickListener(new View.OnClickListener() {
+        mLoginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
@@ -95,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        _signupButton.setEnabled(false);
+        mSignupButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -103,94 +100,94 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        _name = _nameText.getText().toString();
-        _address = _addressText.getText().toString();
-        _email = _emailText.getText().toString();
-        _mobile = _mobileText.getText().toString();
-        _password = _passwordText.getText().toString();
-        _reEnterPassword = _reEnterPasswordText.getText().toString();
+        mName = mNameText.getText().toString();
+        mAddress = mAddressText.getText().toString();
+        mEmail = mEmailText.getText().toString();
+        mMobile = mMobileText.getText().toString();
+        mPassword = mPasswordText.getText().toString();
+        mReEnterPassword = mReEnterPasswordText.getText().toString();
 
-        createUserWithEmailAndPassword(_email, _password);
+        createUserWithEmailAndPassword(mEmail, mPassword);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        _auth.addAuthStateListener(_authListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (_authListener != null) {
-            _auth.removeAuthStateListener(_authListener);
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
     public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
+        mSignupButton.setEnabled(true);
         Intent data = getIntent();
-        data.putExtra("email", _email);
-        data.putExtra("password", _password);
+        data.putExtra("email", mEmail);
+        data.putExtra("password", mPassword);
         setResult(RESULT_OK, data);
         finish();
     }
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        _signupButton.setEnabled(true);
+        mSignupButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
-        _name = null;
-        _address = null;
-        _email = null;
-        _mobile = null;
-        _password = null;
-        _reEnterPassword = null;
+        mName = null;
+        mAddress = null;
+        mEmail = null;
+        mMobile = null;
+        mPassword = null;
+        mReEnterPassword = null;
 
-        String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
-        String email = _emailText.getText().toString();
-        String mobile = _mobileText.getText().toString();
-        String password = _passwordText.getText().toString();
-        String reEnterPassword = _reEnterPasswordText.getText().toString();
+        String name = mNameText.getText().toString();
+        String address = mAddressText.getText().toString();
+        String email = mEmailText.getText().toString();
+        String mobile = mMobileText.getText().toString();
+        String password = mPasswordText.getText().toString();
+        String reEnterPassword = mReEnterPasswordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+            mNameText.setError("at least 3 characters");
             valid = false;
         } else {
-            _nameText.setError(null);
+            mNameText.setError(null);
         }
 
         if (address.isEmpty()) {
-            _addressText.setError("Enter Valid Address");
+            mAddressText.setError("Enter Valid Address");
             valid = false;
         } else {
-            _addressText.setError(null);
+            mAddressText.setError(null);
         }
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            mEmailText.setError("enter a valid email address");
             valid = false;
         } else {
-            _emailText.setError(null);
+            mEmailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 12) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            mPasswordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
-            _passwordText.setError(null);
+            mPasswordText.setError(null);
         }
 
         if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
-            _reEnterPasswordText.setError("Password Do not match");
+            mReEnterPasswordText.setError("Password Do not match");
             valid = false;
         } else {
-            _reEnterPasswordText.setError(null);
+            mReEnterPasswordText.setError(null);
         }
 
         return valid;
@@ -198,7 +195,7 @@ public class SignupActivity extends AppCompatActivity {
 
 
     private void createUserWithEmailAndPassword(String email, String password) {
-        _auth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

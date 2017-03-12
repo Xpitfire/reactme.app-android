@@ -49,31 +49,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String TAG = "reactMe:LoginActivity";
 
     // Authentication: Firebase, Facebook and Google Plus
-    private FirebaseAuth.AuthStateListener _authListener;
-    private FirebaseAuth _auth;
-    private LoginButton _facebookApiClient;
-    private CallbackManager _callbackManager;
-    private GoogleApiClient _googleApiClient;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
+    private LoginButton mFacebookApiClient;
+    private CallbackManager mCallbackManager;
+    private GoogleApiClient mGoogleApiClient;
 
     private static final int REQUEST_SIGNUP = 0;
     private static final int REQUEST_GOOGLEPLUS_SIGNIN = 1;
 
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
-    @BindView(R.id.loginGooglePlusButton) Button _loginGooglePlusButton;
-    @BindView(R.id.loginFacebookButton) Button _loginFacebookButton;
+    @BindView(R.id.input_email) EditText mEmailText;
+    @BindView(R.id.input_password) EditText mPasswordText;
+    @BindView(R.id.btn_login) Button mLoginButton;
+    @BindView(R.id.link_signup) TextView mSignupLink;
+    @BindView(R.id.loginGooglePlusButton) Button mLoginGooglePlusButton;
+    @BindView(R.id.loginFacebookButton) Button mLoginFacebookButton;
 
-    private ProgressDialog _progressDialog;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        _auth = FirebaseAuth.getInstance();
-        _authListener = new FirebaseAuth.AuthStateListener() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -88,25 +88,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onHandleCustomLogin();
             }
         });
-        _loginFacebookButton.setOnClickListener(new View.OnClickListener() {
+        mLoginFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onHandleFacebookLogin();
             }
         });
-        _loginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
+        mLoginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onHandleGooglePlusLogin();
             }
         });
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+        mSignupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
@@ -122,14 +122,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onStart() {
         super.onStart();
-        _auth.addAuthStateListener(_authListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (_authListener != null) {
-            _auth.removeAuthStateListener(_authListener);
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -141,30 +141,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             return;
         }
 
-        _loginButton.setEnabled(false);
+        mLoginButton.setEnabled(false);
         onHandleLogin();
     }
 
     private void onHandleLogin() {
-        _progressDialog = new ProgressDialog(LoginActivity.this,
+        mProgressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
-        _progressDialog.setIndeterminate(true);
-        _progressDialog.setMessage("Authenticating...");
-        _progressDialog.show();
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Authenticating...");
+        mProgressDialog.show();
 
-        final String email = _emailText.getText().toString();
-        final String password = _passwordText.getText().toString();
+        final String email = mEmailText.getText().toString();
+        final String password = mPasswordText.getText().toString();
         Log.d(TAG, "Handle onHandleCustomLogin request");
         customEmailAndPasswordLogin(email, password);
     }
 
     /////////////////////////// FACEBOOK LOGIN
     public void configureFacebookApiClient() {
-        _facebookApiClient = new LoginButton(getApplicationContext());
-        _facebookApiClient.setReadPermissions("email");
-        _callbackManager = CallbackManager.Factory.create();
+        mFacebookApiClient = new LoginButton(getApplicationContext());
+        mFacebookApiClient.setReadPermissions("email");
+        mCallbackManager = CallbackManager.Factory.create();
         // Callback registration
-        _facebookApiClient.registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
+        mFacebookApiClient.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        _auth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
-        _googleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
@@ -228,7 +228,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        _auth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -246,13 +246,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void onHandleGooglePlusLogin() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(_googleApiClient);
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, REQUEST_GOOGLEPLUS_SIGNIN);
     }
 
     /////////////////////////// ACTIVITY LOGIN LOGIC
     private void customEmailAndPasswordLogin(String email, String password) {
-        _auth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -266,7 +266,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        _progressDialog.dismiss();
+                        mProgressDialog.dismiss();
                     }
                 });
     }
@@ -274,7 +274,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        _callbackManager.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
@@ -306,34 +306,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
+        mLoginButton.setEnabled(true);
         EventBus.getDefault().post(new LoginMessageEvent());
         finish();
     }
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
-        _loginButton.setEnabled(true);
+        mLoginButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String email = mEmailText.getText().toString();
+        String password = mPasswordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            mEmailText.setError("enter a valid email address");
             valid = false;
         } else {
-            _emailText.setError(null);
+            mEmailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            mPasswordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
-            _passwordText.setError(null);
+            mPasswordText.setError(null);
         }
 
         return valid;

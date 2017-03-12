@@ -21,12 +21,12 @@ import butterknife.ButterKnife;
  */
 public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.ViewHolder> {
 
-    private final List<User> _values;
-    private final OnListFragmentInteractionListener _listener;
+    private final List<User> mValues;
+    private final OnListFragmentInteractionListener mListener;
 
     public UserRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-        _values = items;
-        _listener = listener;
+        mValues = items;
+        mListener = listener;
     }
 
     @Override
@@ -38,17 +38,17 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder._user = _values.get(position);
-        holder._idView.setText(_values.get(position).getUsername());
-        holder._contentView.setText(_values.get(position).getEmail());
+        holder.mUser = mValues.get(position);
+        holder.mIdView.setText(mValues.get(position).getUsername());
+        holder.mContentView.setText(mValues.get(position).getEmail());
 
-        holder._view.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != _listener) {
+                if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    _listener.onListFragmentInteraction(holder._user);
+                    mListener.onListFragmentInteraction(holder.mUser);
                 }
             }
         });
@@ -56,26 +56,26 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     @Override
     public int getItemCount() {
-        return _values.size();
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public View _view;
-        @BindView(R.id.title_textview) public TextView _idView;
-        @BindView(R.id.subtitle_textview) public TextView _contentView;
+        public View mView;
+        @BindView(R.id.title_textview) public TextView mIdView;
+        @BindView(R.id.subtitle_textview) public TextView mContentView;
 
-        public User _user;
+        public User mUser;
 
         public ViewHolder(View view) {
             super(view);
-            _view = view;
+            mView = view;
             ButterKnife.bind(this, view);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + _contentView.getText() + "'";
+            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

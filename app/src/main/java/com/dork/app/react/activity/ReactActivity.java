@@ -26,11 +26,11 @@ public class ReactActivity extends AppCompatActivity {
      */
     private static final int UI_ANIMATION_DELAY = 300;
 
-    private final Handler _hideHandler = new Handler();
-    private final Handler _recordingHandler = new Handler();
+    private final Handler mHideHandler = new Handler();
+    private final Handler mRecordingHandler = new Handler();
 
-    private View _contentView;
-    private final Runnable _hidePart2Runnable = new Runnable() {
+    private View mContentView;
+    private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
@@ -39,7 +39,7 @@ public class ReactActivity extends AppCompatActivity {
             // Note that some of these constants are new as of API 16 (Jelly Bean)
             // and API 19 (KitKat). It is safe to use them, as they are inlined
             // at compile-time and do nothing on earlier devices.
-            _contentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -48,11 +48,11 @@ public class ReactActivity extends AppCompatActivity {
         }
     };
 
-    private View _controlsView;
+    private View mControlsView;
 
-    private CameraPreview _cameraPreview;
+    private CameraPreview mCameraPreview;
 
-    private final Runnable _showPart2Runnable = new Runnable() {
+    private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
             // Delayed display of UI elements
@@ -60,35 +60,33 @@ public class ReactActivity extends AppCompatActivity {
             if (actionBar != null) {
                 actionBar.show();
             }
-            _controlsView.setVisibility(View.VISIBLE);
+            mControlsView.setVisibility(View.VISIBLE);
         }
     };
-    private boolean _visible;
-    private final Runnable _hideRunnable = new Runnable() {
+    private boolean mVisible;
+    private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
             hide();
         }
     };
 
-    private final Runnable _startRecordingRunnable = new Runnable() {
+    private final Runnable mStartRecordingRunnable = new Runnable() {
         @Override
         public void run() {
-            //_cameraPreview.startRecording();
+            //mCameraPreview.startRecording();
         }
     };
 
-    private final Runnable _stopRecordingRunnable = new Runnable() {
+    private final Runnable mStopRecordingRunnable = new Runnable() {
         @Override
         public void run() {
-            //_cameraPreview.stopRecording();
+            //mCameraPreview.stopRecording();
             finish();
         }
     };
-
-
-
-    @BindView(R.id.camera_preview) FrameLayout _frameLayout;
+    
+    @BindView(R.id.camera_preview) FrameLayout mFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,22 +94,22 @@ public class ReactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_react);
         ButterKnife.bind(this);
 
-        _visible = true;
-        _controlsView = findViewById(R.id.fullscreen_content_controls);
-        _contentView = findViewById(R.id.fullscreen_content);
+        mVisible = true;
+        mControlsView = findViewById(R.id.fullscreen_content_controls);
+        mContentView = findViewById(R.id.fullscreen_content);
 
         // Create our Preview view and set it as the content of our activity.
-        _cameraPreview = new CameraPreview(this);
+        mCameraPreview = new CameraPreview(this);
 
         // Set up the user interaction to manually show or hide the system UI.
-        _contentView.setOnClickListener(new View.OnClickListener() {
+        mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggle();
             }
         });
 
-        _frameLayout.addView(_cameraPreview);
+        mFrameLayout.addView(mCameraPreview);
     }
 
     @Override
@@ -130,12 +128,12 @@ public class ReactActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        _cameraPreview.releaseMediaRecorder();
-        _cameraPreview.releaseCamera();
+        mCameraPreview.releaseMediaRecorder();
+        mCameraPreview.releaseCamera();
     }
 
     private void toggle() {
-        if (_visible) {
+        if (mVisible) {
             hide();
         } else {
             show();
@@ -148,24 +146,24 @@ public class ReactActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        _controlsView.setVisibility(View.GONE);
-        _visible = false;
+        mControlsView.setVisibility(View.GONE);
+        mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
-        _hideHandler.removeCallbacks(_showPart2Runnable);
-        _hideHandler.postDelayed(_hidePart2Runnable, UI_ANIMATION_DELAY);
+        mHideHandler.removeCallbacks(mShowPart2Runnable);
+        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
     private void show() {
         // Show the system bar
-        _contentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        _visible = true;
+        mVisible = true;
 
         // Schedule a runnable to display UI elements after a delay
-        _hideHandler.removeCallbacks(_hidePart2Runnable);
-        _hideHandler.postDelayed(_showPart2Runnable, UI_ANIMATION_DELAY);
+        mHideHandler.removeCallbacks(mHidePart2Runnable);
+        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     /**
@@ -173,18 +171,18 @@ public class ReactActivity extends AppCompatActivity {
      * previously scheduled calls.
      */
     private void delayedHide(int delayMillis) {
-        _hideHandler.removeCallbacks(_hideRunnable);
-        _hideHandler.postDelayed(_hideRunnable, delayMillis);
+        mHideHandler.removeCallbacks(mHideRunnable);
+        mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
     private void delayedRecordingStop(int delayMillis) {
-        _recordingHandler.removeCallbacks(_stopRecordingRunnable);
-        _recordingHandler.postDelayed(_stopRecordingRunnable, delayMillis);
+        mRecordingHandler.removeCallbacks(mStopRecordingRunnable);
+        mRecordingHandler.postDelayed(mStopRecordingRunnable, delayMillis);
     }
 
     private void delayedRecordingStart(int delayMillis) {
-        _recordingHandler.removeCallbacks(_startRecordingRunnable, delayMillis);
-        _recordingHandler.postDelayed(_startRecordingRunnable, delayMillis);
+        mRecordingHandler.removeCallbacks(mStartRecordingRunnable, delayMillis);
+        mRecordingHandler.postDelayed(mStartRecordingRunnable, delayMillis);
     }
 
 }
