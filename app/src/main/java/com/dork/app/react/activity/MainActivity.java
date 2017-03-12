@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         mSettings = new AppSettings(this);
 
         setSupportActionBar(mToolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -75,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
                 Intent intent = new Intent(getApplicationContext(), ReactActivity.class);
                 startActivity(intent);
             }

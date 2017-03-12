@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.dork.app.react.activity.ChatDetailActivity">
     <item
-        android:id="@+id/activity_main__menu_item__option"
+        android:id="@+id/activity_chat_detail__menu_item__option"
         android:orderInCategory="100"
         android:title="@string/menu_chat_detail__item__action_settings"
         app:showAsAction="never" />

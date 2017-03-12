@@ -29,7 +29,28 @@ public class ReactActivity extends AppCompatActivity {
     private final Handler mHideHandler = new Handler();
     private final Handler mRecordingHandler = new Handler();
 
-    private View mContentView;
+    private CameraPreview mCameraPreview;
+    private boolean mVisible;
+
+    private final Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hide();
+        }
+    };
+    private final Runnable mStartRecordingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //mCameraPreview.startRecording();
+        }
+    };
+    private final Runnable mStopRecordingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //mCameraPreview.stopRecording();
+            finish();
+        }
+    };
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -47,11 +68,6 @@ public class ReactActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-
-    private View mControlsView;
-
-    private CameraPreview mCameraPreview;
-
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -63,30 +79,10 @@ public class ReactActivity extends AppCompatActivity {
             mControlsView.setVisibility(View.VISIBLE);
         }
     };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
 
-    private final Runnable mStartRecordingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            //mCameraPreview.startRecording();
-        }
-    };
-
-    private final Runnable mStopRecordingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            //mCameraPreview.stopRecording();
-            finish();
-        }
-    };
-    
     @BindView(R.id.activity_react__frame_layout__camera) FrameLayout mFrameLayout;
+    @BindView(R.id.activity_react__view__fullscreen_content) View mContentView;
+    @BindView(R.id.activity_react__view__fullscreen_controls) View mControlsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +91,6 @@ public class ReactActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.activity_react__view__fullscreen_controls);
-        mContentView = findViewById(R.id.activity_react__view__fullscreen_content);
 
         // Create our Preview view and set it as the content of our activity.
         mCameraPreview = new CameraPreview(this);
