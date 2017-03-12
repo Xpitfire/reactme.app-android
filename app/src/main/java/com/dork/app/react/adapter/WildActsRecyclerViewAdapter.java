@@ -47,7 +47,7 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
         holder.mActMessage = mValues.get(position);
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mIdView.setText(mValues.get(position).getDescription());
+        holder.mIdView.setText(mValues.get(position).description);
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

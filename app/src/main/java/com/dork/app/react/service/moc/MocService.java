@@ -19,29 +19,29 @@ public class MocService {
         User user;
 
         user = new User();
-        user.setUsername("florian@wurm.com");
+        user.username = "florian@wurm.com";
         USERS.add(user);
 
         user = new User();
-        user.setUsername("franz@sisi.com");
+        user.username = "franz@sisi.com";
         USERS.add(user);
 
         user = new User();
-        user.setUsername("dork@dork.com");
+        user.username = "dork@dork.com";
         USERS.add(user);
 
         user = new User();
-        user.setUsername("ran@tastic.com");
+        user.username = "ran@tastic.com";
         USERS.add(user);
 
         user = new User();
-        user.setUsername("test@test.com");
+        user.username = "test@test.com";
         USERS.add(user);
 
         ActMessage actMessage;
 
         actMessage = new ActMessage();
-        actMessage.setDescription("Nice pics man!");
+        actMessage.description = "Nice pics man!";
         ACT_MESSAGES.add(actMessage);
 
     }

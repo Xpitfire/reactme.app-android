@@ -1,22 +1,15 @@
 package com.dork.app.react.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Xpitfire on 12.03.2017.
  */
 
-public abstract class EntityBase implements Entity<String> {
+@IgnoreExtraProperties
+public abstract class EntityBase {
 
-    private String id;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String id;
 
     @Override
     public boolean equals(Object o) {

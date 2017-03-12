@@ -1,18 +1,14 @@
 package com.dork.app.react.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Xpitfire on 12.03.2017.
  */
 
+@IgnoreExtraProperties
 public final class Media extends MessageBase {
 
-    private byte[] data;
+    public byte[] data;
 
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
 }

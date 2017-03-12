@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.dork.app.react.R;
 import com.dork.app.react.adapter.UserRecyclerViewAdapter;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.dork.app.react.model.Profile;
 import com.dork.app.react.model.User;
+import com.dork.app.react.service.firebase.FirebaseProfileService;
 import com.dork.app.react.service.moc.MocService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -119,8 +121,16 @@ public class UserFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginMessageEvent(LoginMessageEvent event) {
-        final RecyclerView recyclerView = (RecyclerView) getView();
+        // TODO: only for testing --> remove
+        User user = new User();
+        user.username = "dummy";
+        user.email = "dummy@dummy.com";
+        user.profile = new Profile();
+        user.profile.firstName = "Du";
+        user.profile.lastName = "Mmy";
+        new FirebaseProfileService().Register(user).execute();
 
+        final RecyclerView recyclerView = (RecyclerView) getView();
         recyclerView.setAdapter(
                 new UserRecyclerViewAdapter(
                         MocService.USERS,

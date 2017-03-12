@@ -116,17 +116,17 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
 
     @Override
     public void onListFragmentInteraction(User user) {
-        Log.i(TAG, user.getUsername());
+        Log.i(TAG, user.username);
         Intent intent = new Intent(this, ChatDetailActivity.class);
-        intent.putExtra("username", user.getUsername());
-        intent.putExtra("status", user.getStatus().name());
-        intent.putExtra("id", user.getId());
+        intent.putExtra("username", user.username);
+        intent.putExtra("status", user.status.name());
+        intent.putExtra("id", user.id);
         startActivity(intent);
     }
 
     @Override
     public void onListFragmentInteraction(ActMessage message) {
-        Log.i(TAG, message.getDescription());
+        Log.i(TAG, message.description);
     }
 
     /**

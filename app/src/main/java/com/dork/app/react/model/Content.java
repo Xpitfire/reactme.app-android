@@ -1,45 +1,17 @@
 package com.dork.app.react.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Xpitfire on 12.03.2017.
  */
 
+@IgnoreExtraProperties
 public final class Content extends EntityBase {
 
-    private String mimeType;
-    private int size;
-    private String mediaId;
-    private String thumbnailId;
+    public String mimeType;
+    public int size;
+    public String mediaId;
+    public String thumbnailId;
 
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public String getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
-    }
-
-    public String getThumbnailId() {
-        return thumbnailId;
-    }
-
-    public void setThumbnailId(String thumbnailId) {
-        this.thumbnailId = thumbnailId;
-    }
 }
