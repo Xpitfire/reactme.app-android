@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     // Icons source: https://icons8.com
     // <a href="https://icons8.com/web-app/5572/Home">Home icon credits</a>
 
-    @BindView(R.id.container) ViewPager mViewPager;
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.tabs) TabLayout mTabLayout;
-    @BindView(R.id.fab) FloatingActionButton mFab;
+    @BindView(R.id.activity_main__view_pager) ViewPager mViewPager;
+    @BindView(R.id.activity_main__toolbar) Toolbar mToolbar;
+    @BindView(R.id.activity_main__tab_layout) TabLayout mTabLayout;
+    @BindView(R.id.activity_main__fab) FloatingActionButton mFab;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity__main);
         ButterKnife.bind(this);
         mSettings = new AppSettings(this);
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_swipe, menu);
+        getMenuInflater().inflate(R.menu.menu__main_swipe, menu);
         return true;
     }
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.activity_main__menu_item__option) {
             return true;
         }
 
@@ -162,11 +162,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnLi
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.act_wild);
+                    return getString(R.string.activity_main__pager_title__act_wild);
                 case 1:
-                    return getString(R.string.friends);
+                    return getString(R.string.activity_main__pager_title__friends);
                 case 2:
-                    return getString(R.string.my_acts);
+                    return getString(R.string.activity_main__pager_title__my_acts);
             }
             return null;
         }

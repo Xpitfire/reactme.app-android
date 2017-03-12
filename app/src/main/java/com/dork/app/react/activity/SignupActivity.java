@@ -28,14 +28,14 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @BindView(R.id.input_name) EditText mNameText;
-    @BindView(R.id.input_address) EditText mAddressText;
-    @BindView(R.id.input_email) EditText mEmailText;
-    @BindView(R.id.input_mobile) EditText mMobileText;
-    @BindView(R.id.input_password) EditText mPasswordText;
-    @BindView(R.id.input_reEnterPassword) EditText mReEnterPasswordText;
-    @BindView(R.id.btn_signup) Button mSignupButton;
-    @BindView(R.id.link_login) TextView mLoginLink;
+    @BindView(R.id.activity_signup__edit_text__input_name) EditText mNameText;
+    @BindView(R.id.activity_signup__edit_text__input_address) EditText mAddressText;
+    @BindView(R.id.activity_signup__edit_text__input_email) EditText mEmailText;
+    @BindView(R.id.activity_signup__edit_text__input_mobile) EditText mMobileText;
+    @BindView(R.id.activity_signup__edit_text__input_password) EditText mPasswordText;
+    @BindView(R.id.activity_signup__edit_text__input_reenter_password) EditText mReEnterPasswordText;
+    @BindView(R.id.activity_signup__button__signup) Button mSignupButton;
+    @BindView(R.id.activity_signup__text_view__login_link) TextView mLoginLink;
 
     private String mName;
     private String mAddress;
@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity__signup);
         ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage(getString(R.string.activity_signup__info__progress_message));
         progressDialog.show();
 
         mName = mNameText.getText().toString();
@@ -134,7 +134,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), R.string.activity_signup__login_failed, Toast.LENGTH_LONG).show();
         mSignupButton.setEnabled(true);
     }
 
@@ -155,14 +155,14 @@ public class SignupActivity extends AppCompatActivity {
         String reEnterPassword = mReEnterPasswordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            mNameText.setError("at least 3 characters");
+            mNameText.setError(getString(R.string.activity_signup__validation_error__name_length));
             valid = false;
         } else {
             mNameText.setError(null);
         }
 
         if (address.isEmpty()) {
-            mAddressText.setError("Enter Valid Address");
+            mAddressText.setError(getString(R.string.activity_signup__validation_error__address_invalid));
             valid = false;
         } else {
             mAddressText.setError(null);
@@ -170,21 +170,21 @@ public class SignupActivity extends AppCompatActivity {
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailText.setError("enter a valid email address");
+            mEmailText.setError(getString(R.string.activity_signup__validation_error__email_invalid));
             valid = false;
         } else {
             mEmailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 12) {
-            mPasswordText.setError("between 4 and 10 alphanumeric characters");
+            mPasswordText.setError(getString(R.string.activity_signup__validation_error__password_length));
             valid = false;
         } else {
             mPasswordText.setError(null);
         }
 
         if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
-            mReEnterPasswordText.setError("Password Do not match");
+            mReEnterPasswordText.setError(getString(R.string.activity_signup__validation_error__password_mismatch));
             valid = false;
         } else {
             mReEnterPasswordText.setError(null);
@@ -205,7 +205,7 @@ public class SignupActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(SignupActivity.this, R.string.signup_failed,
+                            Toast.makeText(SignupActivity.this, R.string.activity_signup__signup_failed,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

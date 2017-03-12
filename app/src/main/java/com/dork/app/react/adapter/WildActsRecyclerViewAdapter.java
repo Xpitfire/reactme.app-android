@@ -35,7 +35,7 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
     public WildActsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView c = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_card_view, parent, false);
+                .inflate(R.layout.fragment__card_view, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(c);
         return vh;
@@ -67,9 +67,9 @@ public class WildActsRecyclerViewAdapter extends RecyclerView.Adapter<WildActsRe
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public CardView mCardView;
-        @BindView(R.id.info_text) public TextView mIdView;
-        public ActMessage mActMessage;
+        CardView mCardView;
+        ActMessage mActMessage;
+        @BindView(R.id.adapter_wild_acts__text_view__id) TextView mIdView;
 
         public ViewHolder(CardView c) {
             super(c);

@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.dork.app.react.fragment.WildActsFragment"
-    tools:listitem="@layout/fragment_card_view" />
+    tools:listitem="@layout/fragment__card_view" />

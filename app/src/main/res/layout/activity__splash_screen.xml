@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:drawableTop="@drawable/logo_simple"
+        android:drawableTop="@drawable/splash_screen__logo_simple"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primary_darker"
         android:textSize="30sp" />

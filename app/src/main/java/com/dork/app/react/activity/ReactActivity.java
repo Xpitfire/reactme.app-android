@@ -86,17 +86,17 @@ public class ReactActivity extends AppCompatActivity {
         }
     };
     
-    @BindView(R.id.camera_preview) FrameLayout mFrameLayout;
+    @BindView(R.id.activity_react__frame_layout__camera) FrameLayout mFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_react);
+        setContentView(R.layout.activity__react);
         ButterKnife.bind(this);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        mControlsView = findViewById(R.id.activity_react__view__fullscreen_controls);
+        mContentView = findViewById(R.id.activity_react__view__fullscreen_content);
 
         // Create our Preview view and set it as the content of our activity.
         mCameraPreview = new CameraPreview(this);

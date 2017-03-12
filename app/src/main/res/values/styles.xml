@@ -37,14 +37,14 @@
     </style>
 
     <style name="FacebookLoginButton">
-        <item name="android:background">@drawable/facebook</item>
+        <item name="android:background">@drawable/login__facebook</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <style name="GooglePlusLoginButton">
-        <item name="android:background">@drawable/googleplus</item>
+        <item name="android:background">@drawable/login__google_plus</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">40dp</item>
         <item name="android:layout_gravity">center_horizontal</item>

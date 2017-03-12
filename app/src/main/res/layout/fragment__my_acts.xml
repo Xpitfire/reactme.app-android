@@ -10,7 +10,7 @@
         android:textAlignment="center"
         android:paddingTop="80dp"
         android:textSize="20sp"
-        android:text="@string/no_new_content_available"
+        android:text="@string/fragment_my_acts__text_view__no_new_content_available_text"
         android:layout_alignParentTop="true" />
 
 </FrameLayout>

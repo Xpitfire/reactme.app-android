@@ -56,21 +56,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
 
     private static final int REQUEST_SIGNUP = 0;
-    private static final int REQUEST_GOOGLEPLUS_SIGNIN = 1;
+    private static final int REQUEST_GOOGLE_PLUS_SIGNIN = 1;
 
-    @BindView(R.id.input_email) EditText mEmailText;
-    @BindView(R.id.input_password) EditText mPasswordText;
-    @BindView(R.id.btn_login) Button mLoginButton;
-    @BindView(R.id.link_signup) TextView mSignupLink;
-    @BindView(R.id.loginGooglePlusButton) Button mLoginGooglePlusButton;
-    @BindView(R.id.loginFacebookButton) Button mLoginFacebookButton;
+    @BindView(R.id.activity_login__edit_text__input_email) EditText mEmailText;
+    @BindView(R.id.activity_login__edit_text__input_password) EditText mPasswordText;
+    @BindView(R.id.activity_login__button__login) Button mLoginButton;
+    @BindView(R.id.activity_login__text_view__signup_link) TextView mSignupLink;
+    @BindView(R.id.activity_login__button__login_google_plus) Button mLoginGooglePlusButton;
+    @BindView(R.id.activity_login__button__login_facebook) Button mLoginFacebookButton;
 
     private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity__login);
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mFacebookApiClient.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                Log.d(TAG, "login__facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -247,7 +247,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void onHandleGooglePlusLogin() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, REQUEST_GOOGLEPLUS_SIGNIN);
+        startActivityForResult(signInIntent, REQUEST_GOOGLE_PLUS_SIGNIN);
     }
 
     /////////////////////////// ACTIVITY LOGIN LOGIC
@@ -280,16 +280,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
                 customEmailAndPasswordLogin(data.getStringExtra("email"), data.getStringExtra("password"));
             } else {
-                Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), R.string.activity_login__login_failed, Toast.LENGTH_LONG).show();
             }
         }
-        if (requestCode == REQUEST_GOOGLEPLUS_SIGNIN) {
+        if (requestCode == REQUEST_GOOGLE_PLUS_SIGNIN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), R.string.activity_login__login_failed, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -312,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), R.string.activity_login__login_failed, Toast.LENGTH_LONG).show();
         mLoginButton.setEnabled(true);
     }
 

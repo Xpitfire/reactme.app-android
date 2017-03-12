@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
+        setContentView(R.layout.activity__splash_screen);
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                 || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(ButterKnife.findById(this, android.R.id.content), R.string.error_bad_permissions, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(ButterKnife.findById(this, android.R.id.content), R.string.activity_splash_screen__error__bad_permissions, Snackbar.LENGTH_LONG).show();
             }
 
             // If we already learned why this is needed, request the perm from user
@@ -78,7 +78,7 @@ public class SplashActivity extends AppCompatActivity {
                 break;
         }
 
-        Toast.makeText(getBaseContext(), R.string.error_bad_permissions, Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), R.string.activity_splash_screen__error__bad_permissions, Toast.LENGTH_LONG).show();
     }
 
     /**

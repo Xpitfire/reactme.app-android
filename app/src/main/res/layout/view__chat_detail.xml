@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_behavior="@string/activity_main__view_pager__appbar_scrolling"
     tools:context="com.dork.app.react.activity.ChatDetailActivity"
-    tools:showIn="@layout/activity_chat_detail">
+    tools:showIn="@layout/activity__chat_detail">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:text="@string/view__text_view__large_text" />
 
 </android.support.v4.widget.NestedScrollView>

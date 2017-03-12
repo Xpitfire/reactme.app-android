@@ -19,7 +19,7 @@
             android:layout_marginBottom="14dp"
             android:layout_marginEnd="-50dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/logo" />
+            android:contentDescription="@string/activity_login__image_view__logo_description" />
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
@@ -28,11 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email"
+            <EditText android:id="@+id/activity_login__edit_text__input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/email"/>
+                android:hint="@string/activity_login__edit_text__email_hint"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -42,50 +42,50 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password"
+            <EditText android:id="@+id/activity_login__edit_text__input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/password"/>
+                android:hint="@string/activity_login__edit_text__password_hint"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/activity_login__button__login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="24dp"
             android:padding="16dp"
-            android:text="@string/login"/>
+            android:text="@string/activity_login__button__text"/>
 
-        <TextView android:id="@+id/link_signup"
+        <TextView android:id="@+id/activity_login__text_view__signup_link"
             android:textColor="@color/aluminum"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:linksClickable="false"
             android:autoLink="all"
-            android:text="@string/signup_info_text"
+            android:text="@string/activity_login__text_view__signup_info_text"
             android:gravity="center"
             android:textSize="16sp"/>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/loginFacebookButton"
+            android:id="@+id/activity_login__button__login_facebook"
             android:scaleType="centerInside"
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
             android:paddingLeft="24dp"
             style="@style/FacebookLoginButton"
-            android:text="@string/facebook_login"
+            android:text="@string/activity_login__button__facebook_text"
             android:layout_height="50dp"/>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/loginGooglePlusButton"
+            android:id="@+id/activity_login__button__login_google_plus"
             android:scaleType="centerInside"
             android:layout_width="wrap_content"
             android:paddingLeft="24dp"
             style="@style/GooglePlusLoginButton"
-            android:text="@string/google_plus_login"
+            android:text="@string/activity_login__button__google_plus_login_text"
             android:layout_height="50dp" />
 
     </LinearLayout>

@@ -20,7 +20,7 @@
             android:layout_marginBottom="14dp"
             android:layout_marginEnd="-50dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/logo" />
+            android:contentDescription="@string/activity_signup__image_view__logo_description" />
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_name"
+            <EditText android:id="@+id/activity_signup__edit_text__input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="@string/name" />
+                android:hint="@string/activity_signup__edit_text__name_hint" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Address Label -->
@@ -43,11 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_address"
+            <EditText android:id="@+id/activity_signup__edit_text__input_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
-                android:hint="@string/address" />
+                android:hint="@string/activity_signup__edit_text__address_hint" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Email Label -->
@@ -57,11 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email"
+            <EditText android:id="@+id/activity_signup__edit_text__input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/email" />
+                android:hint="@string/activity_signup__edit_text__email_hint" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- mobile number -->
@@ -71,11 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_mobile"
+            <EditText android:id="@+id/activity_signup__edit_text__input_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="@string/mobile_number" />
+                android:hint="@string/activity_signup__edit_text__mobile_number_hint" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -85,11 +85,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password"
+            <EditText android:id="@+id/activity_signup__edit_text__input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/password"/>
+                android:hint="@string/activity_signup__edit_text__password_hint"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Re-enter Label -->
@@ -99,28 +99,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_reEnterPassword"
+            <EditText android:id="@+id/activity_signup__edit_text__input_reenter_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/reenter_password"/>
+                android:hint="@string/activity_signup__edit_text__reenter_password_hint"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_signup"
+            android:id="@+id/activity_signup__button__signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="@string/create_account"/>
+            android:text="@string/activity_signup__button__create_account_text"/>
 
-        <TextView android:id="@+id/link_login"
+        <TextView android:id="@+id/activity_signup__text_view__login_link"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="@string/already_member_login_text"
+            android:text="@string/activity_signup__text_view__already_member_login_text"
             android:gravity="center"
             android:textSize="16sp"/>
 

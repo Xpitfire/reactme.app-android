@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/profile_picture_content_description"
+            android:contentDescription="@string/fragment_user__image_view__profile_picture_content_description"
             android:src="@drawable/smily_face"/>
 
         <LinearLayout
@@ -36,18 +36,18 @@
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/title_textview"
+                android:id="@+id/adapter_user__text_view__id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/plain_text_for_preview"
+                android:text="@string/fragment_user__text_view__plain_text_for_preview"
                 android:textSize="20sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             <TextView
-                android:id="@+id/subtitle_textview"
+                android:id="@+id/adapter_user__text_view__content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/plain_text_for_preview"
+                android:text="@string/fragment_user__text_view__plain_text_for_preview"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/imageview_description_user_status"
+            android:contentDescription="@string/fragment_user__image_view__user_status_description"
             android:src="@drawable/messenger_bubble_small_blue"/>
 
     </RelativeLayout>

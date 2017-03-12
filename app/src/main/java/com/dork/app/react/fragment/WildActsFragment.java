@@ -63,7 +63,7 @@ public class WildActsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wild_acts, container, false);
+        View view = inflater.inflate(R.layout.fragment__wild_acts, container, false);
         ButterKnife.bind(this, view);
 
         // Set the adapter

@@ -32,7 +32,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_user, parent, false);
+                .inflate(R.layout.fragment__user, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,11 +61,11 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public View mView;
-        @BindView(R.id.title_textview) public TextView mIdView;
-        @BindView(R.id.subtitle_textview) public TextView mContentView;
+        View mView;
+        User mUser;
 
-        public User mUser;
+        @BindView(R.id.adapter_user__text_view__id) TextView mIdView;
+        @BindView(R.id.adapter_user__text_view__content) TextView mContentView;
 
         public ViewHolder(View view) {
             super(view);
