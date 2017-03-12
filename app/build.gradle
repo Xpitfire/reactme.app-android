@@ -45,12 +45,6 @@ repositories {
 }
 
 dependencies {
-	// Sub-Projects
-    compile(project(':swagger')) {
-        exclude module: "httpmime"
-        exclude module: "httpcore"
-        exclude module: "httpclient"
-    }
 
 	// Jars
     compile fileTree(dir: 'libs', include: ['*.jar'])

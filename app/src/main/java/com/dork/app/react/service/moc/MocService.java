@@ -1,7 +1,7 @@
 package com.dork.app.react.service.moc;
 
-import com.dork.app.react.api.model.ActMessage;
-import com.dork.app.react.api.model.User;
+import com.dork.app.react.model.ActMessage;
+import com.dork.app.react.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,28 +19,28 @@ public class MocService {
         User user;
 
         user = new User();
-        user.email("florian@wurm.com");
-        user.username("flow");
+        user.setEmail("florian@wurm.com");
+        user.setUsername("flow");
         USERS.add(user);
 
         user = new User();
-        user.email("franz@sisi.com");
-        user.username("franz");
+        user.setEmail("franz@sisi.com");
+        user.setUsername("franz");
         USERS.add(user);
 
         user = new User();
-        user.email("dork@dork.com");
-        user.username("dork");
+        user.setEmail("dork@dork.com");
+        user.setUsername("dork");
         USERS.add(user);
 
         user = new User();
-        user.email("ran@tastic.com");
-        user.username("rantastic");
+        user.setEmail("ran@tastic.com");
+        user.setUsername("rantastic");
         USERS.add(user);
 
         user = new User();
-        user.email("test@test.com");
-        user.username("test");
+        user.setEmail("test@test.com");
+        user.setUsername("test");
         USERS.add(user);
 
         ActMessage actMessage;

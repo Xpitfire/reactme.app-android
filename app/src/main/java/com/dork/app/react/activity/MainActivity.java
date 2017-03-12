@@ -17,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.dork.app.react.R;
-import com.dork.app.react.api.model.ActMessage;
 import com.dork.app.react.fragment.MyActsFragment;
 import com.dork.app.react.fragment.UserFragment;
-import com.dork.app.react.api.model.User;
 import com.dork.app.react.fragment.WildActsFragment;
+import com.dork.app.react.model.ActMessage;
+import com.dork.app.react.model.User;
 import com.dork.app.react.util.AppSettings;
 import com.google.firebase.auth.FirebaseAuth;
 

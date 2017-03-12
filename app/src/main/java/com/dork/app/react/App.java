@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dork.app.react.cookie.PersistentCookieStore;
-import com.dork.app.react.api.invoker.Configuration;
 import com.dork.app.react.util.AppSettings;
 
 import java.net.CookieHandler;
@@ -40,10 +39,7 @@ public class App extends MultiDexApplication {
         super.onCreate();
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
         mAppSettings = new AppSettings(this);
-        String server = mAppSettings.getReactServer();
-        Configuration.getDefaultApiClient().setBasePath(server);
 
         // enable cookies
         CookieManager cookieManager = new CookieManager(

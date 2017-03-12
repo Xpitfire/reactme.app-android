@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dork.app.react.R;
-import com.dork.app.react.api.model.ActMessage;
 import com.dork.app.react.fragment.WildActsFragment;
+import com.dork.app.react.model.ActMessage;
 
 import java.util.List;
 

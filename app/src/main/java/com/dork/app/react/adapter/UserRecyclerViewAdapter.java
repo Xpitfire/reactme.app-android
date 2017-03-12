@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.dork.app.react.R;
 import com.dork.app.react.fragment.UserFragment.OnListFragmentInteractionListener;
-import com.dork.app.react.api.model.User;
+import com.dork.app.react.model.User;
 
 import java.util.List;
 

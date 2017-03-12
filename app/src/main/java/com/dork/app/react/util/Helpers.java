@@ -18,9 +18,6 @@ import android.support.v4.content.ContextCompat;
 
 import com.dork.app.react.R;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,10 +66,6 @@ public class Helpers {
             };
         }
         return null;
-    }
-
-    public static DateTime getNow() {
-        return DateTime.now(DateTimeZone.UTC);
     }
 
     public static Drawable getDrawableFromRes(Context c, @DrawableRes int resId) {

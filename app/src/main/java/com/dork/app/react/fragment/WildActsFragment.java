@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.dork.app.react.R;
 import com.dork.app.react.adapter.WildActsRecyclerViewAdapter;
-import com.dork.app.react.api.model.ActMessage;
 import com.dork.app.react.event.WildActMessageEvent;
+import com.dork.app.react.model.ActMessage;
 import com.dork.app.react.service.moc.MocService;
 
 import org.greenrobot.eventbus.EventBus;
