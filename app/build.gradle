@@ -75,7 +75,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 	
 	// app firebase
-	compile "com.google.firebase:firebase-invites:10.0.1"
+	compile "com.google.firebase:firebase-invites:10.2.0"
 
 	// Testing-only dependencies
     testCompile 'junit:junit:4.12'
