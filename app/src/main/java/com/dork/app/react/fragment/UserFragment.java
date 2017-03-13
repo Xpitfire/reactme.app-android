@@ -15,6 +15,7 @@ import com.dork.app.react.adapter.UserRecyclerViewAdapter;
 import com.dork.app.react.event.LoginMessageEvent;
 import com.dork.app.react.model.Profile;
 import com.dork.app.react.model.User;
+import com.dork.app.react.service.ServiceFactory;
 import com.dork.app.react.service.firebase.FirebaseProfileService;
 import com.dork.app.react.service.moc.MocService;
 
@@ -128,7 +129,7 @@ public class UserFragment extends Fragment {
         user.profile = new Profile();
         user.profile.firstName = "Du";
         user.profile.lastName = "Mmy";
-        new FirebaseProfileService().Register(user).execute();
+        ServiceFactory.getProfileService().Register(user).execute();
 
         final RecyclerView recyclerView = (RecyclerView) getView();
         recyclerView.setAdapter(
