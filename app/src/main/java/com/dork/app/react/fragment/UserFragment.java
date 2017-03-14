@@ -13,17 +13,20 @@ import android.view.ViewGroup;
 import com.dork.app.react.R;
 import com.dork.app.react.adapter.UserRecyclerViewAdapter;
 import com.dork.app.react.event.LoginMessageEvent;
-import com.dork.app.react.model.Profile;
 import com.dork.app.react.model.User;
-import com.dork.app.react.service.ServiceFactory;
-import com.dork.app.react.service.firebase.FirebaseProfileService;
-import com.dork.app.react.service.moc.MocService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -122,19 +125,49 @@ public class UserFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginMessageEvent(LoginMessageEvent event) {
-        // TODO: only for testing --> remove
-        User user = new User();
-        user.username = "dummy";
-        user.email = "dummy@dummy.com";
-        user.profile = new Profile();
-        user.profile.firstName = "Du";
-        user.profile.lastName = "Mmy";
-        ServiceFactory.getProfileService().Register(user).execute();
+
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        ref.child("users")
+                .child(auth.getCurrentUser().getUid())
+                .child("profile")
+                .child("friendIds");
+
+        final List<String> friendIds = new ArrayList<>();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    friendIds.add(ds.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        final List<User> friends = new ArrayList<>();
+        for (String friendId : friendIds) {
+            ref.child("users").child(friendId);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    friends.add(user);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
 
         final RecyclerView recyclerView = (RecyclerView) getView();
         recyclerView.setAdapter(
                 new UserRecyclerViewAdapter(
-                        MocService.USERS,
+                        friends,
                         mListener));
+
     }
 }

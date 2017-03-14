@@ -14,7 +14,6 @@ import com.dork.app.react.R;
 import com.dork.app.react.adapter.WildActsRecyclerViewAdapter;
 import com.dork.app.react.event.WildActMessageEvent;
 import com.dork.app.react.model.ActMessage;
-import com.dork.app.react.service.moc.MocService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -107,11 +106,13 @@ public class WildActsFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWildActsMessageEvent(WildActMessageEvent event) {
+        /*
         final RecyclerView recyclerView = (RecyclerView) getView();
 
         recyclerView.setAdapter(
                 new WildActsRecyclerViewAdapter(
                         MocService.ACT_MESSAGES,
                         mListener));
+        */
     }
 }

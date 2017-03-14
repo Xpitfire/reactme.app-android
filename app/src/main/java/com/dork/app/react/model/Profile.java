@@ -11,11 +11,10 @@ import java.util.List;
 @IgnoreExtraProperties
 public final class Profile {
 
-    public String firstName;
-    public String lastName;
+    public String displayName;
     public Content image;
     public List<String> friendIds;
-    public InvitationStatus invitationStatus = InvitationStatus.NATIVE_APP_USER;
+    public InvitationStatus invitationStatus;
     public ContactInfo contactInfo;
 
 }

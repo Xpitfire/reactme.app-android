@@ -19,6 +19,9 @@ import butterknife.ButterKnife;
 // swagger api
 import com.dork.app.react.R;
 import com.dork.app.react.event.LoginMessageEvent;
+import com.dork.app.react.model.Profile;
+import com.dork.app.react.model.User;
+import com.dork.app.react.model.UserStatus;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -40,10 +43,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "reactMe:LoginActivity";
@@ -80,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    onPersistUser(user);
                     onLoginSuccess();
                 } else {
                     // User is signed out
@@ -87,6 +95,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         };
+
+        // TODO: handle smart logout
+        FirebaseAuth.getInstance().signOut();
+        FirebaseDatabase.getInstance().goOffline();
+        FirebaseDatabase.getInstance().goOnline();
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,6 +350,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         return valid;
+    }
+
+    private void onPersistUser(FirebaseUser firebaseUser) {
+        // TODO: check if new user
+        if (true) return;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        User user = new User();
+        user.email = firebaseUser.getEmail();
+        user.username = firebaseUser.getDisplayName();
+        user.status = UserStatus.ACTIVE;
+        user.profile = new Profile();
+        user.profile.displayName = firebaseUser.getDisplayName();
+        user.profile.friendIds = new ArrayList<>();
+        user.profile.friendIds.add("snKmenq7TAhEpSCD67ZVqTOBMSH3");
+
+        ref.child("users")
+                .child(firebaseUser.getUid())
+                .setValue(user);
+        user.id = ref.getKey();
     }
 
 }
